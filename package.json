@@ -1,0 +1,30 @@
+{
+  "name": "handicrafts",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.77.2",
+    "axios": "^1.9.0",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.19.1",
+    "lucide-react": "^0.511.0",
+    "next": "15.3.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-hot-toast": "^2.5.2",
+    "react-spinners": "^0.17.0",
+    "recharts": "^2.15.3",
+    "swiper": "^11.2.7",
+    "zustand": "^5.0.5"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "tailwindcss": "^4"
+  }
+}

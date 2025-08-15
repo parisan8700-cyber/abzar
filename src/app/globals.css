@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+@theme {
+  --font-kalameh: var(--local-font-kalameh);
+}
+
+body {
+  @apply font-kalameh overflow-x-hidden;
+  background: #F9F9F9;
+}
+
+@utility container {
+  @apply m-auto px-4 lg:px-24;
+}
+
+@utility flex-center {
+  @apply flex items-center justify-center;
+}
+.rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.4s ease-out;
+}
+
+@layer utilities {
+  .animation-delay-200 {
+    animation-delay: 0.2s;
+  }
+  .animation-delay-400 {
+    animation-delay: 0.4s;
+  }
+}
