@@ -97,7 +97,7 @@ export default function Offer() {
       {/* div سمت راست (اسلایدر) */}
       <div className="relative py-10 w-full lg:w-3/4 h-[29rem] bg-[#3a4654] rounded-xl overflow-hidden mt-10 lg:mt-0">
         <div className="flex flex-wrap justify-center items-center content-center h-full">
-          <div className="w-[90%] mx-auto px-3">
+          <div className="w-[90%] mx-auto px-3 ml-[9px]">
             <Swiper
               loop
               autoplay={{ delay: 4000, disableOnInteraction: false }}

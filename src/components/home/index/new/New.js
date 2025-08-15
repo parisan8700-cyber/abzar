@@ -54,7 +54,7 @@ export default function New() {
 
       <div className="bg-yellow-300 p-8 px-3 rounded-2xl ">
         <div className="flex flex-wrap justify-center items-center content-center">
-          <div className="w-[90%] md:w-full max-w-7xl mx-auto">
+          <div className="w-[90%] md:w-full max-w-7xl mx-auto ml-[9px]">
             <Swiper
               loop
               autoplay={{ delay: 3000, disableOnInteraction: false }}

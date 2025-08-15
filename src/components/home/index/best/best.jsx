@@ -54,7 +54,7 @@ export default function Best() {
 
         <div className="flex-grow border-t border-gray-300 w-5xl h-0.5 mb-6" />
 
-        <div className="w-[90%] md:w-full max-w-7xl mx-auto px-3">
+        <div className="w-[90%] md:w-full max-w-7xl mx-auto px-3 ml-[9px]">
           <Swiper
             loop
             autoplay={{ delay: 3000, disableOnInteraction: false }}

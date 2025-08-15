@@ -54,7 +54,7 @@ export default function Bady() {
 
             <div className="bg-gray-200 p-5 rounded-2xl">
                 <div className="flex flex-wrap justify-center items-center content-center">
-                    <div className="w-[90%] md:w-full max-w-7xl mx-auto">
+                    <div className="w-[90%] md:w-full max-w-7xl mx-auto ml-[9px]">
                         <Swiper
                             loop
                             autoplay={{ delay: 3000, disableOnInteraction: false }}
