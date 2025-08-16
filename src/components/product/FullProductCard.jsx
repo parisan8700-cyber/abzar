@@ -160,7 +160,7 @@ export default function FullProduct() {
         <div className="w-full lg:w-[35%] flex gap-3">
           {/* تصاویر کوچک */}
           {product?.images?.length > 1 && (
-            <div className="flex flex-row md:flex-col gap-2 overflow-x-auto md:overflow-y-auto">
+            <div className="flex flex-col gap-2 overflow-x-auto md:overflow-y-auto">
               {product.images.map((img, i) => (
                 <button
                   key={i}
@@ -308,7 +308,7 @@ export default function FullProduct() {
         <div className="mt-20 relative w-full h-[28rem] rounded-xl overflow-hidden">
           <div className="flex items-center w-full mb-6 gap-2.5">
             <div className="flex h-10 rounded-tr-2xl rounded-br-2xl w-1 bg-yellow-400" />
-            <h2 className="sm:text-xl font-bold text-black whitespace-nowrap flex-shrink-0">
+            <h2 className="text-2xl font-bold text-black whitespace-nowrap flex-shrink-0">
               محصولات مرتبط
             </h2>
 

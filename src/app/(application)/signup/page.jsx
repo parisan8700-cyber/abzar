@@ -103,7 +103,7 @@ export default function Signup() {
             />
 
             <form
-                className="flex flex-col items-center gap-6 w-full max-w-[320px] mx-auto p-6 m-20 bg-gray-300 backdrop-blur-md rounded-2xl shadow-md"
+                className="flex flex-col items-center gap-6 w-full max-w-[320px] mx-auto p-6 m-20 bg-gray-200 backdrop-blur-md rounded-2xl shadow-md"
                 onSubmit={handleSubmit}
                 dir="rtl"
             >

@@ -24,13 +24,13 @@ function Error({ reset }) {
           <div className="flex gap-4">
             <button
               onClick={reset}
-              className="text-lg text-green-500 font-medium border border-green-500 py-2.5 px-4 rounded-xl cursor-pointer"
+              className="text-lg text-yellow-400 font-medium border border-yellow-400 py-2.5 px-4 rounded-xl cursor-pointer"
             >
               تلاش دوباره
             </button>
             <Link
               href="/"
-              className="flex items-center gap-2 sm:text-lg  bg-green-500 text-white font-medium py-2.5 px-4 rounded-xl"
+              className="flex items-center gap-2 sm:text-lg  bg-yellow-400 font-medium py-2.5 px-4 rounded-xl"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

@@ -2,8 +2,8 @@ import CategorySlider from "@/components/home/index/categorySlider/CategorySlide
 import Baner from "../../components/home/index/baner/baner";
 import Best from "../../components/home/index/best/best";
 import Header from "../../components/home/index/header/Header";
-import New from "../../components/home/index/new/New";
 import Offer from "../../components/home/index/offer/Offer";
+import New from "@/components/home/index/new/New";
 import Brand from "@/components/home/index/brand/Brand";
 import Guide from "@/components/home/index/guide/guide";
 import BArg from "@/components/home/index/barg/barg";

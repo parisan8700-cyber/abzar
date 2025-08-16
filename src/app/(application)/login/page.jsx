@@ -90,7 +90,7 @@ export default function Login() {
       />
 
 
-      <form className="flex flex-col items-center gap-6 w-full max-w-[320px] mx-auto p-6 bg-gray-300 backdrop-blur-md rounded-2xl shadow-md" onSubmit={handleSubmit} dir="rtl">
+      <form className="flex flex-col items-center gap-6 w-full max-w-[320px] mx-auto p-6 bg-gray-200 backdrop-blur-md rounded-2xl shadow-md" onSubmit={handleSubmit} dir="rtl">
 
         <div className="w-full flex flex-col gap-2">
           <label className="text-black font-bold text-sm">
