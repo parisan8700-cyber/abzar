@@ -3,7 +3,7 @@ export default function SkeletonProductCard() {
         <div className="w-[18rem] h-[25rem]">
             <div className="relative group">
 
-                <div className="bg-white rounded-2xl p-4 shadow-lg relative mr-[23px]">
+                <div className="bg-white rounded-2xl p-4 shadow-lg relative mr-[21px]">
                     {/* تصویر */}
                     <div className="relative w-full h-44 rounded-md overflow-hidden bg-gray-200 animate-pulse" />
 

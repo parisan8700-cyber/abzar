@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#2F3B46] text-white py-10 px-6 mt-32 mb-20 rounded-3xl">
+    <footer className="bg-[#2F3B46] text-white py-10 px-6 mt-32 max-md:mb-20 rounded-3xl">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-10">
         {/* سمت چپ: لوگو + متن + لینک‌های دسترسی سریع */}
         <div className="md:w-1/2 space-y-8">
