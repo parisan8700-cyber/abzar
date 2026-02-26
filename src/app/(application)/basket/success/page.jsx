@@ -10,19 +10,18 @@ export default function SuccessPage() {
 
   useEffect(() => {
     const verifyPayment = async () => {
-      const status = searchParams.get("Status");
-      const authority = searchParams.get("Authority");
-      const amount = 10000; 
-  
-      if (status === "OK" && authority) {
+      const trackId = searchParams.get("trackId");
+      const orderId = searchParams.get("orderId");
+
+      if (trackId && orderId) {
         try {
           const { data } = await Fetch.post(
             "/api/payment/verify",
-            { Authority: authority, Amount: amount },
-            { requiresAuth: false } 
+            { trackId, orderId },
+            { requiresAuth: false }
           );
-  
-          if (data?.code === 100) {
+
+          if (data.success) {
             setMessage("✅ پرداخت با موفقیت تأیید شد");
           } else {
             router.push("/basket/failed");
@@ -31,14 +30,14 @@ export default function SuccessPage() {
           router.push("/basket/failed");
         }
       } else {
-        setMessage("❌ وضعیت پرداخت نامشخص است");
+        setMessage("❌ شناسه تراکنش یافت نشد");
         router.push("/basket/failed");
       }
     };
-  
+
     verifyPayment();
   }, [searchParams, router]);
-  
+
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-6">

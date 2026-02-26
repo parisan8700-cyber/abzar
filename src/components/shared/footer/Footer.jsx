@@ -1,6 +1,7 @@
 "use client";
-import { Instagram, Send } from "lucide-react";
+import { Instagram, MessageCircle, Send } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -66,54 +67,79 @@ export default function Footer() {
           <p className="font-bold text-2xl">ابزارکاشمر را همراهی کنید:</p>
 
           {/* شبکه‌های اجتماعی */}
-          <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-            <button className="group flex items-center justify-center gap-3 border border-gray-400 w-full sm:w-40 px-6 py-2 rounded-md hover:border-yellow-400 transition-colors duration-300">
+          <div className="flex justify-center md:justify-start gap-4">
+
+            <Link
+              href="ii"
+              className="w-12 h-12 flex items-center justify-center rounded-full border border-gray-300 transition-all duration-300 group"
+            >
               <Instagram
-                size={24}
-                className="stroke-gray-400 group-hover:stroke-yellow-400 transition-colors duration-300"
+                size={26}
+                className="stroke-fuchsia-600 transition-all duration-300"
               />
-              <p className="text-gray-400 group-hover:text-yellow-400 transition-colors duration-300">
-                اینستاگرام
-              </p>
-            </button>
+            </Link>
 
-            <button className="group flex items-center justify-center gap-3 border border-gray-400 w-full sm:w-40 px-6 py-2 rounded-md hover:border-yellow-400 transition-colors duration-300">
+            <Link
+              href="ii"
+              className="w-12 h-12 flex items-center justify-center rounded-full border border-gray-300 transition-all duration-300 group"
+            >
               <Send
-                size={24}
-                className="stroke-gray-400 group-hover:stroke-yellow-400 transition-colors duration-300"
+                size={26}
+                className="stroke-blue-500 transition-all duration-300"
               />
-              <p className="text-gray-400 group-hover:text-yellow-400 transition-colors duration-300">
-                تلگرام
+            </Link>
+
+            <Link
+              href="ii"
+              className="w-12 h-12 flex items-center justify-center rounded-full border border-gray-300 transition-all duration-300"
+            >
+              <Image
+                src="/img/watsapp.png"
+                alt="WhatsApp"
+                width={46}
+                height={46}
+              />
+            </Link>
+
+            <Link
+              href="ii"
+              className="w-12 h-12 flex items-center justify-center rounded-full border border-gray-300 transition-all duration-300"
+            >
+              <Image
+                src="/img/rubika.png"
+                alt="Rubika"
+                width={26}
+                height={26}
+              />
+            </Link>
+        </div>
+
+
+        <div className="grid bg-gray-700 rounded-2xl items-center p-6">
+          <div className="flex items-center justify-between gap-6">
+            {/* سمت چپ: لوگو */}
+            <div className="flex-shrink-0">
+              <Image src="/img/logo.png" alt="Logo" width={100} height={100} />
+            </div>
+
+            {/* سمت راست: متن‌ها */}
+            <div className="space-y-2 text-white">
+              <p>
+                <span className="font-bold"> تلفن:</span> 09151203083
               </p>
-            </button>
-          </div>
-
-
-          <div className="grid bg-gray-700 rounded-2xl items-center p-6">
-            <div className="flex items-center justify-between gap-6">
-              {/* سمت چپ: لوگو */}
-              <div className="flex-shrink-0">
-                <Image src="/img/logo.png" alt="Logo" width={100} height={100} />
-              </div>
-
-              {/* سمت راست: متن‌ها */}
-              <div className="space-y-2 text-white">
-                <p>
-                  <span className="font-bold"> تلفن:</span> 09151203083
-                </p>
-                <p>
-                <span className="font-bold"> آدرس:</span> کاشمر، بلوار فروتقه، بعد از امام‌رضا(ع)15 
-                </p>
-              </div>
+              <p>
+                <span className="font-bold"> آدرس:</span> کاشمر، بلوار فروتقه، بعد از امام‌رضا(ع)15
+              </p>
             </div>
           </div>
+        </div>
 
-            <div className="border-t border-gray-500 pt-3 text-sm grid gap-5">
-              <p>تمام حقوق مادی و معنوی مطالب موجود در این سایت متعلق به مجموعه ابزار کاشمر می‌باشد.</p> 
-              <a href="https://parisan0487.github.io">طراحی شده توسط : <span className="text-yellow-400 underline underline-offset-2">پریسان غلامی</span></a>
-            </div>
+        <div className="border-t border-gray-500 pt-3 text-sm grid gap-5">
+          <p>تمام حقوق مادی و معنوی مطالب موجود در این سایت متعلق به مجموعه ابزار کاشمر می‌باشد.</p>
+          <a href="https://parisan0487.github.io">طراحی شده توسط : <span className="text-yellow-400 underline underline-offset-2">پریسان غلامی</span></a>
         </div>
       </div>
-    </footer>
+    </div>
+    </footer >
   );
 }
