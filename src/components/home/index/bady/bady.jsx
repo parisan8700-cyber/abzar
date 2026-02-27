@@ -16,9 +16,9 @@ export default function Bady() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        Fetch.get("/api/products")
+        Fetch.get("/api/products/category/badi")
             .then((res) => {
-                setProducts(res.data.filter((p) => p.categories?.includes("بادی")));
+                setProducts(res.data);
             })
             .catch((err) => {
                 console.error("خطا در دریافت محصولات:", err);

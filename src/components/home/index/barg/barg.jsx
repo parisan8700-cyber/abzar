@@ -12,14 +12,14 @@ import { useEffect, useState } from "react";
 import SkeletonProductCard from "@/components/shared/loading/SkeletonProductCard";
 import Fetch from "@/utils/Fetch";
 
-export default function BArg() {
+export default function Barg() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        Fetch.get("/api/products")
+        Fetch.get("/api/products/category/barghi-va-sharji")
             .then((res) => {
-                setProducts(res.data.filter((p) => p.categories?.includes("برقی")));
+                setProducts(res.data);
             })
             .catch((err) => {
                 console.error("خطا در دریافت محصولات:", err);

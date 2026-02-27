@@ -16,9 +16,9 @@ export default function Jush() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        Fetch.get("/api/products")
+        Fetch.get("/api/products/category/joosh-borosh")
             .then((res) => {
-                setProducts(res.data.filter((p) => p.categories?.includes("جوش-برش")));
+                setProducts(res.data);
             })
             .catch((err) => {
                 console.error("خطا در دریافت محصولات:", err);

@@ -16,9 +16,9 @@ export default function Offer() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    Fetch.get("/api/products")
+    Fetch.get("/api/products/category/aghsati")
       .then((res) => {
-        setProducts(res.data.filter((p) => p.categories?.includes("اقساطی")));
+        setProducts(res.data);
       })
       .catch((err) => {
         console.error("خطا در دریافت محصولات:", err);

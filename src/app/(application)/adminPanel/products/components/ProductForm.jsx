@@ -1,12 +1,13 @@
 "use client";
-
-
+import Fetch from "@/utils/Fetch";
 import { useState, useEffect } from "react";
 
 export default function ProductForm({ initialData = {}, onSubmit }) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [uploading, setUploading] = useState(false);
     const [open, setOpen] = useState(false);
+    const [openCategory, setOpenCategory] = useState(null);
+    const [categoryMap, setCategoryMap] = useState({});
     const [formData, setFormData] = useState({
         name: "",
         price: "",
@@ -21,6 +22,43 @@ export default function ProductForm({ initialData = {}, onSubmit }) {
         categories: [],
         categoryInput: "",
         ...initialData,
+    });
+
+
+
+    useEffect(() => {
+        Fetch("/api/categories")
+            .then(res => {
+                const data = res.data;
+                const map = {};
+
+                data.forEach(cat => {
+                    if (!cat.parent) {
+                        map[cat.name] = { id: cat._id, subs: {} };
+                    }
+                });
+
+                data.forEach(cat => {
+                    if (cat.parent) {
+                        const parent = data.find(p => p._id === cat.parent);
+                        if (parent) {
+                            map[parent.name].subs[cat.name] = cat._id;
+                        }
+                    }
+                });
+
+                setCategoryMap(map);
+            })
+            .catch(err => console.error(err));
+    }, []);
+
+    const sortedCategories = Object.keys(categoryMap).sort((a, b) => {
+        const aHasSubs = categoryMap[a].subs && Object.keys(categoryMap[a].subs).length > 0;
+        const bHasSubs = categoryMap[b].subs && Object.keys(categoryMap[b].subs).length > 0;
+
+        if (aHasSubs && !bHasSubs) return -1;
+        if (!aHasSubs && bHasSubs) return 1;
+        return 0;
     });
 
 
@@ -58,10 +96,8 @@ export default function ProductForm({ initialData = {}, onSubmit }) {
     };
 
 
-
-    const availableCategories = ["برقی", "تعمیرگاهی", "بادی", "آبرسانی", "جوش-برش", "جرثقیل-لیفتینگ", "جدید", "اقساطی" , "پرفروش"];
     const brands = ["Arva", "Tosan", "Ronix", "Crown", "Rabin", "Strong", "سایر"];
-
+    const categoryIds = formData.categories.map(c => c.sub || c.main); 
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -90,21 +126,23 @@ export default function ProductForm({ initialData = {}, onSubmit }) {
         e.preventDefault();
         setIsSubmitting(true);
 
+        
         try {
             const dataToSend = {
                 ...formData,
                 price: Number(formData.price.replace(/\./g, "")),
                 discount: Number(formData.discount.replace(/\./g, "")),
                 stock: Number(formData.stock),
+                categories: categoryIds,
                 brand: formData.brand || "نامشخص",
             };
-
+            
             delete dataToSend.categoryInput;
             delete dataToSend.featureInput;
             delete dataToSend.imagesInput;
             delete dataToSend.variantInput;
-
-
+            
+            
             await onSubmit(dataToSend);
         } catch (err) {
         } finally {
@@ -123,7 +161,6 @@ export default function ProductForm({ initialData = {}, onSubmit }) {
         try {
             setUploading(true);
 
-            // https://yourdomain.com/api/upload/image
             const res = await fetch("https://backabzar.onrender.com/api/upload/image", {
                 method: "POST",
                 body: formData,
@@ -242,26 +279,101 @@ export default function ProductForm({ initialData = {}, onSubmit }) {
             {/* دسته‌بندی‌ها */}
             <div>
                 <label className="block mb-1 font-semibold text-yellow-400">دسته‌بندی‌ها</label>
-                <div className="grid sm:grid-cols-2 gap-2 mt-2">
-                    {availableCategories.map((cat) => (
-                        <label key={cat} className="flex items-center gap-2 cursor-pointer">
-                            <input
-                                type="checkbox"
-                                value={cat}
-                                checked={formData.categories?.includes(cat)}
-                                onChange={(e) => {
-                                    const isChecked = e.target.checked;
-                                    setFormData((prev) => {
-                                        const newList = isChecked
-                                            ? [...(prev.categories || []), cat]
-                                            : prev.categories.filter((c) => c !== cat);
-                                        return { ...prev, categories: newList };
-                                    });
-                                }}
-                            />
-                            <span>{cat}</span>
-                        </label>
-                    ))}
+                <div>
+                    {sortedCategories.map((mainCat) => {
+                        const mainId = categoryMap[mainCat].id;
+                        const subs = categoryMap[mainCat].subs;
+
+                        const isMainChecked = formData.categories?.some(
+                            (c) => c.main === mainId && !c.sub
+                        );
+
+                        const isOpen = openCategory === mainCat;
+
+                        return (
+                            <div key={mainCat} className="mb-4 border rounded-lg bg-white shadow-sm">
+                                {/* هدر دسته اصلی */}
+                                <div
+                                    className="flex items-center justify-between p-3 cursor-pointer hover:bg-gray-50 transition"
+                                    onClick={() => setOpenCategory(isOpen ? null : mainCat)}
+                                >
+                                    <label className="flex items-center gap-2 font-semibold text-gray-800 cursor-pointer">
+                                        <input
+                                            type="checkbox"
+                                            checked={isMainChecked}
+                                            className="accent-blue-600"
+                                            onChange={(e) => {
+                                                const isChecked = e.target.checked;
+                                                setFormData((prev) => {
+                                                    let newList = prev.categories || [];
+
+                                                    if (isChecked) {
+                                                        if (!newList.some(c => c.main === mainId && !c.sub)) {
+                                                            newList.push({ main: mainId });
+                                                        }
+                                                    } else {
+                                                        newList = newList.filter(c => c.main !== mainId);
+                                                    }
+
+                                                    return { ...prev, categories: newList };
+                                                });
+                                            }}
+                                            onClick={(e) => e.stopPropagation()}
+                                        />
+                                        <span>{mainCat}</span>
+                                    </label>
+                                    <span className="text-gray-500 text-sm">{isOpen ? "▲" : "▼"}</span>
+                                </div>
+
+                                {/* زیر دسته‌ها */}
+                                {isOpen && subs && Object.keys(subs).length > 0 && (
+                                    <div className="p-3 bg-gray-50 border-t grid sm:grid-cols-2 gap-2">
+                                        {Object.keys(subs).map((subCat) => {
+                                            const subId = subs[subCat];
+                                            const isSubChecked = formData.categories?.some(
+                                                (c) => c.main === mainId && c.sub === subId
+                                            );
+
+                                            return (
+                                                <label
+                                                    key={subId}
+                                                    className="flex items-center gap-2 cursor-pointer text-gray-700"
+                                                >
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={isSubChecked}
+                                                        className="accent-blue-600"
+                                                        onChange={(e) => {
+                                                            const isChecked = e.target.checked;
+                                                            setFormData((prev) => {
+                                                                let newList = prev.categories || [];
+
+                                                                if (isChecked) {
+                                                                    if (!newList.some(c => c.main === mainId && !c.sub)) {
+                                                                        newList.push({ main: mainId });
+                                                                    }
+                                                                    if (!newList.some(c => c.main === mainId && c.sub === subId)) {
+                                                                        newList.push({ main: mainId, sub: subId });
+                                                                    }
+                                                                } else {
+                                                                    newList = newList.filter(
+                                                                        (c) => !(c.main === mainId && c.sub === subId)
+                                                                    );
+                                                                }
+
+                                                                return { ...prev, categories: newList };
+                                                            });
+                                                        }}
+                                                    />
+                                                    <span>{subCat}</span>
+                                                </label>
+                                            );
+                                        })}
+                                    </div>
+                                )}
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
 

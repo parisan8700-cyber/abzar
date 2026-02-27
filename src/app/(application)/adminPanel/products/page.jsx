@@ -10,13 +10,14 @@ export default function ProductsPage() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const [deleteId, setDeleteId] = useState(null); 
+    const [deleteId, setDeleteId] = useState(null);
 
     useEffect(() => {
         const fetchProducts = async () => {
             try {
                 const res = await Fetch.get("/api/products");
                 setProducts(res.data);
+                console.log(res.data)
             } catch (err) {
                 toast.error("خطا در دریافت محصولات")
             } finally {
@@ -94,7 +95,13 @@ export default function ProductsPage() {
                                         {product.price.toLocaleString()} تومان
                                     </td>
                                     <td className="py-3 px-6">
-                                        {product.categories?.join("، ") || "-"}
+                                        {[
+                                            ...new Set(
+                                                product.categories?.map(cat =>
+                                                    cat.parent ? cat.parent.name : cat.name
+                                                )
+                                            )
+                                        ].join("، ") || "-"}
                                     </td>
                                     <td className="py-3 px-6 flex gap-5">
                                         <button
@@ -117,7 +124,7 @@ export default function ProductsPage() {
                 </div>
             )}
 
-           
+
             {showDeleteModal && (
                 <div className="fixed inset-0  flex items-center justify-center z-50">
                     <div className="bg-white rounded-2xl p-8 w-[350px] max-w-full mx-4 shadow-2xl text-center">
