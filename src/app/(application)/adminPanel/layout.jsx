@@ -68,18 +68,19 @@ export default function AdminLayout({ children }) {
 
       <div className="flex flex-col lg:flex-row-reverse mt-5 gap-6 font-gandom min-h-[70vh]">
 
-        <aside className="w-full lg:max-w-xs rounded-2xl shadow-xl bg-gray-300 p-4 max-h-[470px]">
+        <aside className="order-1 lg:order-2 w-full lg:max-w-xs rounded-2xl shadow-xl bg-gray-300 p-4 lg:max-h-[470px]">
           <div className="bg-yellow-400 text-center py-2 rounded-md font-bold mb-4">
             <Link href="/account">پیشخوان</Link>
           </div>
+
           <ul className="space-y-3 text-right px-2">
             {menuItems.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
                   className={`block px-3 py-2 rounded-md transition-all ${pathname.startsWith(item.href)
-                    ? "bg-yellow-400/30 font-bold"
-                    : "hover:text-yellow-800"
+                      ? "bg-yellow-400/30 font-bold"
+                      : "hover:text-yellow-800"
                     }`}
                 >
                   {item.label}
@@ -89,9 +90,10 @@ export default function AdminLayout({ children }) {
           </ul>
         </aside>
 
-        <main className="flex-1 bg-gray-100 p-4 md:p-8 rounded-2xl shadow-xl">
+        <main className="order-2 lg:order-1 flex-1 bg-gray-100 p-4 md:p-8 rounded-2xl shadow-xl">
           {children}
         </main>
+
       </div>
     </>
   );
