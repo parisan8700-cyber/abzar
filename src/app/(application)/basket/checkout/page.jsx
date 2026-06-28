@@ -31,7 +31,7 @@ export default function Checkout() {
   useEffect(() => {
     const fetchCart = async () => {
       try {
-        if (isLoggedIn === null) return; 
+        if (isLoggedIn === null) return;
 
         if (isLoggedIn) {
           // کاربر لاگین شده
@@ -114,21 +114,59 @@ export default function Checkout() {
     const cartItems = cart.items.map((item) => ({
       productId: item.product._id,
       quantity: item.quantity,
-      price: item.product.price,
+
+      // اگر اقساطی بود از مبلغ پیش پرداخت استفاده کن
+      // اگر نقدی بود از قیمت اصلی
+      price:
+        item.type === "installment"
+          ? item.price
+          : item.product.price - (item.product.discount || 0),
+
+      originalPrice: item.product.price,
+
+      purchaseType: item.type,
     }));
 
-    const totalAmount = cart.items.reduce(
+    console.log("cart.items", cart.items);
+
+    const totalAmount = cart.items.reduce((sum, item) => {
+      const currentPrice =
+        item.type === "installment"
+          ? item.price
+           : item.product.price - (item.product.discount || 0);
+
+      return sum + currentPrice * item.quantity;
+    }, 0);
+
+    const paymentType = cart.items.some(item => item.type === "installment")
+      ? "installment"
+      : "cash";
+
+    const originalTotal = cart.items.reduce(
       (sum, item) => sum + item.product.price * item.quantity,
       0
     );
 
     const finalFormData = {
       ...formData,
+
       items: cartItems,
+
+      // مبلغی که الان پرداخت می‌شود
       amount: totalAmount,
+
+      // مبلغ پرداخت شده
+      paidAmount: totalAmount,
+
+      // مبلغ باقی مانده
+      remainingAmount: originalTotal - totalAmount,
+
+      // نوع سفارش
+      paymentType,
     };
 
     try {
+      console.log("finalFormData", finalFormData);
       const { data } = await Fetch.post('/api/orders', finalFormData);
 
       const { _id: orderId, amount } = data;

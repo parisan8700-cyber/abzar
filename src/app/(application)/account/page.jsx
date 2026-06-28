@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { MapPin, ShoppingBasket, UserRound } from "lucide-react";
+import { ListOrdered, ShoppingBasket, UserRound } from "lucide-react";
 import Fetch from "@/utils/Fetch";
 
 export default function AccountPage() {
@@ -24,9 +24,9 @@ export default function AccountPage() {
 
   const items = [
     {
-      title: "آدرس‌ها",
-      icon: <MapPin className="w-10 h-10 text-yellow-400" />,
-      href: "/account/address",
+      title: "سفارش ها",
+      icon: <ListOrdered className="w-10 h-10 text-yellow-400" />,
+      href: "/account/orders",
     },
     {
       title: "سبدخرید",

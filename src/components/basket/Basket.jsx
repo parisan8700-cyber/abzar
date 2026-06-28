@@ -33,6 +33,7 @@ export default function Basket() {
       if (isLoggedIn) {
         // کاربر لاگین شده
         const { data } = await Fetch.get("/api/cart", { requiresAuth: true });
+        console.log(data)
         setCart(data);
       } else {
         // کاربر مهمان
@@ -105,10 +106,22 @@ export default function Basket() {
   if (!cart) return <MiniLoading />;
 
   const totalPrice = cart.items.reduce((sum, item) => {
-    const itemPrice = item.type === "installment" ? item.price : item.product?.price || 0;
+    let itemPrice = 0;
+
+    if (item.type === "installment") {
+      // مبلغ پیش پرداخت
+      itemPrice = item.price;
+    } else {
+      // قیمت نقدی با اعمال تخفیف
+      const price = item.product?.price || 0;
+      const discount = item.product?.discount || 0;
+
+      itemPrice = price - discount;
+    }
+
     return sum + itemPrice * item.quantity;
   }, 0);
-  
+
 
   return (
     <div dir="rtl">
@@ -157,12 +170,37 @@ export default function Basket() {
                     />
                     <div>
                       <h3 className="text-base font-semibold truncate w-40">{item.product?.name}</h3>
-                      <p className="text-sm text-gray-600">
-                        {/* اگر اقساطیه از item.price استفاده کن، در غیر اینصورت قیمت اصلی */}
-                        {item.type === "installment"
-                          ? `${item.price} تومان (پیش‌پرداخت)`
-                          : `${item.product?.price ?? 0} تومان`}
-                      </p>
+                      <div className="mt-1">
+                        {item.type === "installment" ? (
+                          <>
+                            <p className="text-sm text-gray-500 line-through">
+                              {item.product?.price?.toLocaleString()} تومان
+                            </p>
+
+                            <p className="text-sm font-bold text-green-600">
+                              {item.price?.toLocaleString()} تومان (پیش‌پرداخت)
+                            </p>
+                          </>
+                        ) : (
+                          <>
+                            {item.product?.discount > 0 ? (
+                              <>
+                                <p className="text-sm text-gray-500 line-through">
+                                  {item.product.price.toLocaleString()} تومان
+                                </p>
+
+                                <p className="text-base text-green-600">
+                                  {(item.product.price - item.product.discount).toLocaleString()} تومان
+                                </p>
+                              </>
+                            ) : (
+                              <p className="text-base font-bold">
+                                {item.product?.price?.toLocaleString()} تومان
+                              </p>
+                            )}
+                          </>
+                        )}
+                      </div>
                       <p className="text-sm text-gray-600">تعداد: {item.quantity}</p>
                     </div>
                   </div>

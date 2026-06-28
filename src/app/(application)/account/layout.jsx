@@ -64,10 +64,6 @@ export default function AccountLayout({ children }) {
 
       <div className="flex flex-col md:flex-row-reverse mt-5 gap-6 font-gandom min-h-[70vh]">
 
-        <main className="flex-1 bg-gray-100 p-4 md:p-8 rounded-2xl shadow-xl">
-          {children}
-        </main>
-
         <aside className="w-full md:max-w-xs rounded-2xl shadow-xl bg-gray-300 p-4 max-h-[470px]">
           <div className="bg-yellow-400 text-center py-2 rounded-md font-bold mb-4">
             <Link href="/account">پیشخوان</Link>
@@ -78,8 +74,8 @@ export default function AccountLayout({ children }) {
                 <Link
                   href={item.href}
                   className={`block px-3 py-2 rounded-md transition-all ${pathname.startsWith(item.href)
-                      ? "bg-yellow-400/30 font-bold"
-                      : "hover:text-yellow-800"
+                    ? "bg-yellow-400/30 font-bold"
+                    : "hover:text-yellow-800"
                     }`}
                 >
                   {item.label}
@@ -106,6 +102,11 @@ export default function AccountLayout({ children }) {
             </li>
           </ul>
         </aside>
+
+        <main className="flex-1 bg-gray-100 p-4 md:p-8 rounded-2xl shadow-xl">
+          {children}
+        </main>
+        
       </div>
     </>
   );
