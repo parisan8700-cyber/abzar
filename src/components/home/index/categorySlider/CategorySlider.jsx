@@ -8,12 +8,12 @@ import "swiper/css";
 import "swiper/css/navigation";
 
 const categories = [
-    { icon: "/img/1.png", title: "برقی و شارژی", slug: "electric" },
-    { icon: "/img/2.png", title: "بادی", slug: "pneumatic" },
-    { icon: "/img/3.png", title: "جوش و برش", slug: "welding" },
-    { icon: "/img/4.png", title: "تاسیسات و آبرسانی", slug: "plumbing" },
-    { icon: "/img/5.png", title: "تخصصی تعمیرگاهی", slug: "garage-tools" },
-    { icon: "/img/6.png", title: "جرثقیل و لیفتینگ", slug: "lifting" },
+    { icon: "/img/1.png", title: "برقی و شارژی", slug: "barghi-va-sharji" },
+    { icon: "/img/2.png", title: "بادی", slug: "badi" },
+    { icon: "/img/3.png", title: "جوش و برش", slug: "joosh-va-boresh" },
+    { icon: "/img/4.png", title: "تاسیسات و آبرسانی", slug: "abresani" },
+    { icon: "/img/5.png", title: "تخصصی تعمیرگاهی", slug: "tamirgahi" },
+    { icon: "/img/6.png", title: "جرثقیل و لیفتینگ", slug: "jeraghil-lifting" },
 ];
 
 export default function CategorySlider() {

@@ -39,7 +39,7 @@ export default function Best() {
 
           {/* دکمه‌ها */}
           <div className="absolute left-1 lg:left-8 flex gap-2">
-            <Link href="/shop/پرفروش">
+            <Link href="/shop/porforoush">
               <button
                 className="w-36 h-10 flex items-center justify-center bg-yellow-400 text-black rounded-lg 
              hover:bg-yellow-300 hover:text-white transition-colors duration-300"
