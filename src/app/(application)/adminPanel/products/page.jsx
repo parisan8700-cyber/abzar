@@ -1,16 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import MiniLoading from "@/components/shared/loading/MiniLoading";
 import toast from "react-hot-toast";
 import Fetch from "@/utils/Fetch";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function ProductsPage() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [deleteId, setDeleteId] = useState(null);
+
+    const ITEMS_PER_PAGE = 6;
+    const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -26,6 +30,13 @@ export default function ProductsPage() {
 
         fetchProducts();
     }, []);
+
+    const totalPages = Math.ceil(products.length / ITEMS_PER_PAGE);
+
+    const currentProducts = useMemo(() => {
+        const start = (currentPage - 1) * ITEMS_PER_PAGE;
+        return products.slice(start, start + ITEMS_PER_PAGE);
+    }, [products, currentPage]);
 
     const openDeleteModal = (id) => {
         setDeleteId(id);
@@ -47,6 +58,38 @@ export default function ProductsPage() {
         } finally {
             cancelDelete();
         }
+    };
+
+    const getPageNumbers = () => {
+        const pages = [];
+
+        if (totalPages <= 5) {
+            for (let i = 1; i <= totalPages; i++) {
+                pages.push(i);
+            }
+        } else {
+            if (currentPage <= 3) {
+                pages.push(1, 2, 3, "...", totalPages);
+            } else if (currentPage >= totalPages - 2) {
+                pages.push(
+                    1,
+                    "...",
+                    totalPages - 2,
+                    totalPages - 1,
+                    totalPages
+                );
+            } else {
+                pages.push(
+                    1,
+                    "...",
+                    currentPage,
+                    "...",
+                    totalPages
+                );
+            }
+        }
+
+        return pages;
     };
 
     return (
@@ -84,7 +127,7 @@ export default function ProductsPage() {
                                     </td>
                                 </tr>
                             )}
-                            {products.map((product) => (
+                            {currentProducts.map((product) => (
                                 <tr
                                     key={product._id}
                                     className="border-t border-gray-200 hover:bg-[#d4f5ef] transition"
@@ -146,6 +189,56 @@ export default function ProductsPage() {
                             </button>
                         </div>
                     </div>
+                </div>
+            )}
+
+            {totalPages > 1 && (
+                <div className="mt-8 flex justify-center items-center gap-2 flex-wrap">
+
+                    <button
+                        disabled={currentPage === 1}
+                        onClick={() => setCurrentPage(prev => prev - 1)}
+                        className="px-4 h-10 rounded-xl border bg-white disabled:opacity-40 hover:bg-yellow-400 hover:text-white transition"
+                    >
+                        <ChevronRight size={18} />
+                    </button>
+
+                    {getPageNumbers().map((page, index) =>
+
+                        page === "..." ? (
+
+                            <span
+                                key={index}
+                                className="px-2 text-gray-500"
+                            >
+                                ...
+                            </span>
+
+                        ) : (
+
+                            <button
+                                key={index}
+                                onClick={() => setCurrentPage(page)}
+                                className={`w-10 h-10 rounded-xl transition-all ${currentPage === page
+                                    ? "bg-yellow-400 text-white shadow-lg scale-105"
+                                    : "bg-white border hover:bg-yellow-100"
+                                    }`}
+                            >
+                                {page}
+                            </button>
+
+                        )
+
+                    )}
+
+                    <button
+                        disabled={currentPage === totalPages}
+                        onClick={() => setCurrentPage(prev => prev + 1)}
+                        className="px-4 h-10 rounded-xl border bg-white disabled:opacity-40 hover:bg-yellow-400 hover:text-white transition"
+                    >
+                        <ChevronLeft size={18} />
+                    </button>
+
                 </div>
             )}
         </div>

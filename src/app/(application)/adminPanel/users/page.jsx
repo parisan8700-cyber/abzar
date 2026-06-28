@@ -1,8 +1,9 @@
 "use client";
 
+import { useEffect, useMemo, useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import MiniLoading from "@/components/shared/loading/MiniLoading";
 import Fetch from "@/utils/Fetch";
-import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 export default function UsersPage() {
@@ -13,10 +14,18 @@ export default function UsersPage() {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedUserId, setSelectedUserId] = useState(null);
 
+    const ITEMS_PER_PAGE = 6;
+    const [currentPage, setCurrentPage] = useState(1);
+
     const fetchUsers = async () => {
         try {
             const { data } = await Fetch.get('/api/users/getAll', { requiresAuth: true });
             setUsers(data);
+
+            const maxPage = Math.max(1, Math.ceil(data.length / ITEMS_PER_PAGE));
+            if (currentPage > maxPage) {
+                setCurrentPage(maxPage);
+            }
         } catch (err) {
             toast.error("خطا در دریافت کاربران");
         } finally {
@@ -58,7 +67,7 @@ export default function UsersPage() {
         }
     };
 
-    
+
     const cancelDelete = () => {
         setShowDeleteModal(false);
         setSelectedUserId(null);
@@ -67,6 +76,45 @@ export default function UsersPage() {
     useEffect(() => {
         fetchUsers();
     }, []);
+
+    const totalPages = Math.ceil(users.length / ITEMS_PER_PAGE);
+
+    const currentUsers = useMemo(() => {
+        const start = (currentPage - 1) * ITEMS_PER_PAGE;
+        return users.slice(start, start + ITEMS_PER_PAGE);
+    }, [users, currentPage]);
+
+    const getPageNumbers = () => {
+        const pages = [];
+
+        if (totalPages <= 5) {
+            for (let i = 1; i <= totalPages; i++) {
+                pages.push(i);
+            }
+        } else {
+            if (currentPage <= 3) {
+                pages.push(1, 2, 3, "...", totalPages);
+            } else if (currentPage >= totalPages - 2) {
+                pages.push(
+                    1,
+                    "...",
+                    totalPages - 2,
+                    totalPages - 1,
+                    totalPages
+                );
+            } else {
+                pages.push(
+                    1,
+                    "...",
+                    currentPage,
+                    "...",
+                    totalPages
+                );
+            }
+        }
+
+        return pages;
+    };
 
     return (
         <div className="min-h-screen p-6" dir="rtl">
@@ -95,7 +143,7 @@ export default function UsersPage() {
                                     </td>
                                 </tr>
                             )}
-                            {users.map((user) => (
+                            {currentUsers.map((user) => (
                                 <tr
                                     key={user._id}
                                     className="border-t border-gray-200 hover:bg-[#d4f5ef] transition-colors duration-200 cursor-pointer"
@@ -159,6 +207,50 @@ export default function UsersPage() {
                             </button>
                         </div>
                     </div>
+                </div>
+            )}
+
+            {totalPages > 1 && (
+                <div className="mt-8 flex justify-center items-center gap-2 flex-wrap">
+
+                    <button
+                        disabled={currentPage === 1}
+                        onClick={() => setCurrentPage(prev => prev - 1)}
+                        className="px-4 h-10 rounded-xl border bg-white disabled:opacity-40 hover:bg-yellow-400 hover:text-white transition"
+                    >
+                        <ChevronRight size={18} />
+                    </button>
+
+                    {getPageNumbers().map((page, index) =>
+                        page === "..." ? (
+                            <span
+                                key={index}
+                                className="px-2 text-gray-500"
+                            >
+                                ...
+                            </span>
+                        ) : (
+                            <button
+                                key={index}
+                                onClick={() => setCurrentPage(page)}
+                                className={`w-10 h-10 rounded-xl transition-all ${currentPage === page
+                                        ? "bg-yellow-400 text-white shadow-lg scale-105"
+                                        : "bg-white border hover:bg-yellow-100"
+                                    }`}
+                            >
+                                {page}
+                            </button>
+                        )
+                    )}
+
+                    <button
+                        disabled={currentPage === totalPages}
+                        onClick={() => setCurrentPage(prev => prev + 1)}
+                        className="px-4 h-10 rounded-xl border bg-white disabled:opacity-40 hover:bg-yellow-400 hover:text-white transition"
+                    >
+                        <ChevronLeft size={18} />
+                    </button>
+
                 </div>
             )}
 
