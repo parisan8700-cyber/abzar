@@ -29,7 +29,7 @@ export default function Navbar() {
   const linkHref = isLoggedIn ? "/account" : "/signup";
 
   const navLinks = [
-    { href: "/shop", label: "پرفروش ها", Icon: Flame },
+    { href: "/shop/porforoush", label: "پرفروش ها", Icon: Flame },
     { href: "/check", label: "شرایط اقساط", Icon: Package },
   ];
 
