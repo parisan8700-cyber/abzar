@@ -64,22 +64,45 @@ export default function ProductForm({ initialData = {}, onSubmit }) {
 
 
     useEffect(() => {
-        if (initialData && Object.keys(initialData).length > 0) {
+        if (
+            initialData &&
+            Object.keys(initialData).length > 0 &&
+            Object.keys(categoryMap).length > 0
+        ) {
+
+            const convertedCategories = [];
+
+            initialData.categories.forEach((cat) => {
+                if (!cat.parent) {
+                    // دسته اصلی
+                    convertedCategories.push({
+                        main: cat._id,
+                    });
+                } else {
+                    // زیر دسته
+                    convertedCategories.push({
+                        main: cat.parent,
+                        sub: cat._id,
+                    });
+                }
+            });
+
             setFormData({
                 name: initialData.name || "",
-                price: initialData.price || "",
-                discount: initialData.discount || "",
+                price: initialData.price ? formatNumber(initialData.price) : "",
+                discount: initialData.discount ? formatNumber(initialData.discount) : "",
+                stock: initialData.stock ?? "",
                 description: initialData.description || "",
                 brand: initialData.brand || "",
                 images: initialData.images || [],
                 feature: initialData.feature || [],
-                categories: initialData.categories || [],
+                categories: convertedCategories,
                 imagesInput: "",
                 featureInput: "",
                 categoryInput: "",
             });
         }
-    }, [initialData]);
+    }, [initialData, categoryMap]);
 
     const formatNumber = (value) => {
         if (!value) return "";
@@ -97,7 +120,7 @@ export default function ProductForm({ initialData = {}, onSubmit }) {
 
 
     const brands = ["Arva", "Tosan", "Ronix", "Crown", "Rabin", "Strong", "سایر"];
-    const categoryIds = formData.categories.map(c => c.sub || c.main); 
+    const categoryIds = formData.categories.map(c => c.sub || c.main);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -126,25 +149,26 @@ export default function ProductForm({ initialData = {}, onSubmit }) {
         e.preventDefault();
         setIsSubmitting(true);
 
-        
+
         try {
             const dataToSend = {
                 ...formData,
-                price: Number(formData.price.replace(/\./g, "")),
-                discount: Number(formData.discount.replace(/\./g, "")),
+                price: Number(String(formData.price).replace(/\./g, "")),
+                discount: Number(String(formData.discount || "").replace(/\./g, "")),
                 stock: Number(formData.stock),
                 categories: categoryIds,
                 brand: formData.brand || "نامشخص",
             };
-            
+
             delete dataToSend.categoryInput;
             delete dataToSend.featureInput;
             delete dataToSend.imagesInput;
             delete dataToSend.variantInput;
-            
-            
+
+
             await onSubmit(dataToSend);
         } catch (err) {
+            console.error(err);
         } finally {
             setIsSubmitting(false);
         }

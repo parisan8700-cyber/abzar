@@ -2,6 +2,7 @@ import axios from "axios";
 
 const Fetch = axios.create({
   baseURL: "https://backabzar.onrender.com",
+  // baseURL: "http://localhost:5000",
   headers: { "Content-Type": "application/json" },
 });
 

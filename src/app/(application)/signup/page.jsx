@@ -54,6 +54,8 @@ export default function Signup() {
             setIsSubmitting(true);
 
             const endpoint = "https://backabzar.onrender.com/api/users/register";
+            // const endpoint = "http://localhost:5000/api/users/register";
+
 
             const res = await axios.post(endpoint, userData, {
                 headers: { "Content-Type": "application/json" },

@@ -16,7 +16,7 @@ export default function Jush() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        Fetch.get("/api/products/category/joosh-borosh")
+        Fetch.get("/api/products/category/joosh-va-boresh")
             .then((res) => {
                 setProducts(res.data);
             })

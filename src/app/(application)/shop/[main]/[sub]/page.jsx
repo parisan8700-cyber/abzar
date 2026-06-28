@@ -12,7 +12,7 @@ async function getProductsByCategory(mainSlug, subSlug) {
 }
 
 export default async function SubCategoryPage({ params }) {
-    const { main, sub } = params;
+    const { main, sub } = await params;
     const products = await getProductsByCategory(main, sub);
 
     return <ProductShop data={products} />;

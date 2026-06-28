@@ -75,7 +75,6 @@ export default function FullProduct() {
       const data = await res.json();
 
       if (!res.ok) throw new Error(data.message || "خطا در افزودن به سبد خرید");
-      console.log(data)
 
       toast.success("محصول با موفقیت به سبد خریداضافه شد");
     } catch (err) {
@@ -119,7 +118,6 @@ export default function FullProduct() {
       const data = await res.json();
 
       if (!res.ok) throw new Error(data.message || "خطا در افزودن به سبد خرید");
-      console.log(data)
 
       toast.success("محصول با موفقیت به سبد خریداضافه شد");
     } catch (err) {

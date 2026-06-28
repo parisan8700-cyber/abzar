@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Fetch from "@/utils/Fetch";
+import { Search } from "lucide-react";
 
 export default function SearchNav() {
   const [value, setValue] = useState("");
@@ -100,15 +101,7 @@ export default function SearchNav() {
       )}
 
       <div className="w-10 h-10 flex items-center justify-center">
-        <Image
-          src="https://mehdibagheridev.ir/modista/wp-content/uploads/2024/12/Minimalistic-Magnifer.svg"
-          width={15}
-          height={15}
-          alt="آیکن جستجو"
-          className="w-5 h-5 active:scale-95 cursor-pointer"
-          loading="eager"
-          priority
-        />
+        <Search />
       </div>
     </div>
   );

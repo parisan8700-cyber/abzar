@@ -17,7 +17,6 @@ export default function ProductsPage() {
             try {
                 const res = await Fetch.get("/api/products");
                 setProducts(res.data);
-                console.log(res.data)
             } catch (err) {
                 toast.error("خطا در دریافت محصولات")
             } finally {

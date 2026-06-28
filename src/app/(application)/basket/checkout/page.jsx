@@ -52,7 +52,6 @@ export default function Checkout() {
         }
       } catch (error) {
         toast.error("خطا در بارگذاری سبد خرید");
-        console.log(error);
       }
     };
 
