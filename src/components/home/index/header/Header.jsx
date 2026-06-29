@@ -6,10 +6,10 @@ export default function Header() {
     <div className="w-full relative">
               <div className="relative w-full aspect-[1920/750] min-h-[170px] overflow-hidden">
                 <Image
-                  src="/img/banner.jpg"
+                  src="/img/mainBaner.png"
                   alt="banner"
                   fill
-                  className="rounded-3xl object-cover"
+                  className="rounded-3xl "
                 />
             </div>
     </div>

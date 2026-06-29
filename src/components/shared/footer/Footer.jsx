@@ -12,7 +12,13 @@ export default function Footer() {
           {/* لوگو و متن */}
           <div className="space-y-4">
             <div className="flex items-center">
-              <Image src="/img/logo.png" alt="Logo" width={100} height={100} />
+              {/* <Image src="/img/logo.png" alt="Logo" width={100} height={100} /> */}
+              <Image
+                src="/img/mainLogo.png"
+                alt="لوگو"
+                width={80}
+                height={80}
+              />
               <p className="font-bold text-2xl">ابزارکاشمر</p>
             </div>
             <p className="text-lg text-gray-400 leading-6">
@@ -112,34 +118,34 @@ export default function Footer() {
                 height={26}
               />
             </Link>
-        </div>
+          </div>
 
 
-        <div className="grid bg-gray-700 rounded-2xl items-center p-6">
-          <div className="flex items-center justify-between gap-6">
-            {/* سمت چپ: لوگو */}
-            <div className="flex-shrink-0">
-              <Image src="/img/logo.png" alt="Logo" width={100} height={100} />
-            </div>
+          <div className="grid bg-gray-700 rounded-2xl items-center p-6">
+            <div className="flex items-center justify-between gap-6">
+              {/* سمت چپ: لوگو */}
+              <div className="flex-shrink-0">
+                <Image src="/img/logo.png" alt="Logo" width={100} height={100} />
+              </div>
 
-            {/* سمت راست: متن‌ها */}
-            <div className="space-y-2 text-white">
-              <p>
-                <span className="font-bold"> تلفن:</span> 09151203083
-              </p>
-              <p>
-                <span className="font-bold"> آدرس:</span> کاشمر، بلوار فروتقه، بعد از امام‌رضا(ع)15
-              </p>
+              {/* سمت راست: متن‌ها */}
+              <div className="space-y-2 text-white">
+                <p>
+                  <span className="font-bold"> تلفن:</span> 09151203083
+                </p>
+                <p>
+                  <span className="font-bold"> آدرس:</span> کاشمر، بلوار فروتقه، بعد از امام‌رضا(ع)15
+                </p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="border-t border-gray-500 pt-3 text-sm grid gap-5">
-          <p>تمام حقوق مادی و معنوی مطالب موجود در این سایت متعلق به مجموعه ابزار کاشمر می‌باشد.</p>
-          <a href="https://parisan0487.github.io">طراحی شده توسط : <span className="text-yellow-400 underline underline-offset-2">پریسان غلامی</span></a>
+          <div className="border-t border-gray-500 pt-3 text-sm grid gap-5">
+            <p>تمام حقوق مادی و معنوی مطالب موجود در این سایت متعلق به مجموعه ابزار کاشمر می‌باشد.</p>
+            <a href="https://parisan0487.github.io">طراحی شده توسط : <span className="text-yellow-400 underline underline-offset-2">پریسان غلامی</span></a>
+          </div>
         </div>
       </div>
-    </div>
     </footer >
   );
 }

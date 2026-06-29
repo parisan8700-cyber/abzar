@@ -97,11 +97,17 @@ export default function Navbar() {
         <div className="flex items-center gap-6">
           <Link href="/">
             <Image
+              src="/img/mainLogo.png"
+              alt="لوگو"
+              width={80}
+              height={80}
+            />
+            {/* <Image
               src="/img/logo.png"
               alt="لوگو"
               width={100}
               height={100}
-            />
+            /> */}
           </Link>
 
           <nav className="max-[1100px]:hidden">
