@@ -27,6 +27,26 @@ export default function Checkout() {
 
   const [errors, setErrors] = useState({});
   const [cart, setCart] = useState(null);
+  const [shippingMethod, setShippingMethod] = useState("post");
+
+  const shippingCost =
+    shippingMethod === "pickup"
+      ? 0
+      : shippingMethod === "post"
+        ? 100000
+        : 200000;
+
+
+  const finalAmount =
+    (cart?.items?.reduce((sum, item) => {
+      const currentPrice =
+        item.type === "installment"
+          ? item.price
+          : item.product.price - (item.product.discount || 0);
+
+      return sum + currentPrice * item.quantity;
+    }, 0) || 0) + shippingCost;
+
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -127,13 +147,11 @@ export default function Checkout() {
       purchaseType: item.type,
     }));
 
-    console.log("cart.items", cart.items);
-
     const totalAmount = cart.items.reduce((sum, item) => {
       const currentPrice =
         item.type === "installment"
           ? item.price
-           : item.product.price - (item.product.discount || 0);
+          : item.product.price - (item.product.discount || 0);
 
       return sum + currentPrice * item.quantity;
     }, 0);
@@ -153,20 +171,22 @@ export default function Checkout() {
       items: cartItems,
 
       // مبلغی که الان پرداخت می‌شود
-      amount: totalAmount,
+      // amount: totalAmount,
 
-      // مبلغ پرداخت شده
-      paidAmount: totalAmount,
+      // // مبلغ پرداخت شده
+      // paidAmount: totalAmount,
 
-      // مبلغ باقی مانده
-      remainingAmount: originalTotal - totalAmount,
+      // // مبلغ باقی مانده
+      // remainingAmount: originalTotal - totalAmount,
 
       // نوع سفارش
       paymentType,
+
+      //نوع پست
+      shippingMethod,
     };
 
     try {
-      console.log("finalFormData", finalFormData);
       const { data } = await Fetch.post('/api/orders', finalFormData);
 
       const { _id: orderId, amount } = data;
@@ -209,20 +229,34 @@ export default function Checkout() {
   );
 
   return (
-    <div className="p-10" dir="rtl">
+    <div className="min-h-screen bg-gray-100 py-10 px-4" dir="rtl">
+
       <Stepper currentStep={2} />
-      <div className="min-h-screen overflow-hidden">
-        <div className="flex justify-center items-center">
-          <div className="w-full max-w-4xl bg-gray-300 rounded-2xl overflow-hidden">
+
+      <div className="flex justify-center">
+        <div className="w-full max-w-4xl">
+
+          <div className="bg-white shadow-xl rounded-3xl overflow-hidden">
+
             <form
               onSubmit={handleSubmit}
-              className="grid grid-cols-1 shadow-xl gap-6 p-6 sm:p-10"
+              className="p-8 sm:p-10 space-y-8"
             >
-              <div>
-                <h1 className="text-3xl font-bold mb-10 text-center">
+
+              {/* Title */}
+              <div className="text-center">
+                <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-800">
                   جزئیات صورت‌حساب
                 </h1>
+                <p className="text-gray-500 text-sm mt-2">
+                  اطلاعات خود را برای ثبت سفارش تکمیل کنید
+                </p>
+              </div>
+
+              {/* FORM SECTION */}
+              <div className="bg-gray-50 rounded-2xl p-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
                   {renderInput("lastName", "نام خانوادگی")}
                   {renderInput("firstName", "نام")}
                   {renderInput("city", "شهر")}
@@ -230,29 +264,134 @@ export default function Checkout() {
                   {renderInput("address", "آدرس خیابان", "sm:col-span-2")}
                   {renderInput("postalCode", "کدپستی")}
                   {renderInput("phone", "تلفن")}
-                  {renderInput("description", "توضیحات سفارش (اختیاری)", "sm:col-span-2", true)}
+                  {renderInput(
+                    "description",
+                    "توضیحات سفارش (اختیاری)",
+                    "sm:col-span-2",
+                    true
+                  )}
+
+                  {/* SHIPPING */}
+                  <div className="sm:col-span-2 mt-2">
+                    <h3 className="font-bold text-lg mb-4 text-gray-800">
+                      🚚 روش ارسال
+                    </h3>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+                      {/* PICKUP */}
+                      <div
+                        onClick={() => setShippingMethod("pickup")}
+                        className={`cursor-pointer border rounded-2xl p-4 flex justify-between items-center transition
+                        ${shippingMethod === "pickup"
+                            ? "border-green-500 bg-green-50"
+                            : "hover:bg-gray-50"
+                          }`}
+                      >
+                        <div>
+                          <p className="font-semibold">🏪 تحویل حضوری</p>
+                          <p className="text-sm text-gray-500">
+                            دریافت از فروشگاه
+                          </p>
+                        </div>
+
+                        <div className="font-bold text-green-600">
+                          رایگان
+                        </div>
+                      </div>
+
+                      {/* POST */}
+                      <div
+                        onClick={() => setShippingMethod("post")}
+                        className={`cursor-pointer border rounded-2xl p-4 flex justify-between items-center transition
+                        ${shippingMethod === "post"
+                            ? "border-blue-500 bg-blue-50"
+                            : "hover:bg-gray-50"
+                          }`}
+                      >
+                        <div>
+                          <p className="font-semibold">📦 پست پیشتاز</p>
+                          <p className="text-sm text-gray-500">
+                            ۲ تا ۵ روز کاری
+                          </p>
+                        </div>
+
+                        <div className="font-bold text-blue-600">
+                          100,000 تومان
+                        </div>
+                      </div>
+
+                      {/* EXPRESS */}
+                      <div
+                        onClick={() => setShippingMethod("express")}
+                        className={`cursor-pointer border rounded-2xl p-4 flex justify-between items-center transition
+                        ${shippingMethod === "express"
+                            ? "border-yellow-500 bg-yellow-50"
+                            : "hover:bg-gray-50"
+                          }`}
+                      >
+                        <div>
+                          <p className="font-semibold">⚡ پست سریع</p>
+                          <p className="text-sm text-gray-500">
+                            ارسال فوری
+                          </p>
+                        </div>
+
+                        <div className="font-bold text-yellow-600">
+                          200,000 تومان
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
                 </div>
-                <button
-                  type="submit"
-                  className="mt-8 w-full bg-yellow-400 p-3 rounded-lg hover:bg-yellow-500 transition-all duration-300 text-lg"
-                >
-                  ثبت سفارش
-                </button>
+
+                {/* SUMMARY */}
+                <div className="bg-white rounded-2xl p-5 border mt-6 space-y-3">
+
+                  <div className="flex justify-between text-gray-600">
+                    <span>هزینه ارسال</span>
+                    <span>{shippingCost.toLocaleString()} تومان</span>
+                  </div>
+
+                  <div className="flex justify-between text-base font-bold text-gray-900 border-t pt-3">
+                    <span>مبلغ قابل پرداخت</span>
+                    <span className="text-green-600">
+                      {finalAmount.toLocaleString()} تومان
+                    </span>
+                  </div>
+
+                </div>
+
               </div>
 
-              <Link href="/basket">
-                <button
-                  type="button"
-                  className="flex items-center justify-center gap-2 border border-gray-800 hover:bg-yellow-500 transition-all duration-300 px-6 py-3 rounded-xl text-base w-full sm:w-auto"
-                >
-                  <ArrowRight className="w-4 h-4" />
-                  بازگشت
-                </button>
-              </Link>
+              {/* SUBMIT */}
+              <button
+                type="submit"
+                className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-bold p-4 rounded-2xl hover:scale-[1.01] transition"
+              >
+                ثبت سفارش
+              </button>
+
             </form>
+
           </div>
         </div>
       </div>
+
+      {/* BACK BUTTON */}
+      <div className="mt-6 text-center">
+        <Link href="/basket">
+          <button
+            type="button"
+            className="border border-gray-300 hover:bg-gray-200 transition px-6 py-3 rounded-xl"
+          >
+            بازگشت
+          </button>
+        </Link>
+      </div>
+
     </div>
   );
 }

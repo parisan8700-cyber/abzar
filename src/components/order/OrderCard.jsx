@@ -208,6 +208,38 @@ export default function OrderCard({ order }) {
 
                     </div>
 
+                    {/* روش ارسال */}
+                    <div className="border-t pt-4">
+
+                        <h4 className="font-bold text-gray-700 flex items-center gap-2 mb-3">
+                            <Package size={17} />
+                            روش ارسال
+                        </h4>
+
+                        <div className="flex items-center justify-between bg-gray-50 rounded-xl px-4 py-3">
+
+                            <div className="flex items-center gap-2 text-gray-700 font-medium">
+
+                                <span>
+                                    {order.shippingMethod === "pickup" && "🏪 تحویل حضوری"}
+                                    {order.shippingMethod === "post" && "📦 پست پیشتاز"}
+                                    {order.shippingMethod === "express" && "⚡ پست سریع"}
+                                </span>
+
+                            </div>
+
+                            <div className="text-left">
+
+                                <p className="font-bold text-yellow-500">
+                                    {order.shippingCost?.toLocaleString()} تومان
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
                 </div>
 
             </div>
