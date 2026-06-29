@@ -95,7 +95,7 @@ export default function Footer() {
               />
             </Link>
 
-            <Link
+            {/* <Link
               href="ii"
               className="w-12 h-12 flex items-center justify-center rounded-full border border-gray-300 transition-all duration-300"
             >
@@ -105,7 +105,7 @@ export default function Footer() {
                 width={46}
                 height={46}
               />
-            </Link>
+            </Link> */}
 
             <Link
               href="ii"
