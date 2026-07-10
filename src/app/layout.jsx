@@ -55,10 +55,89 @@ const kalameh = localFont({
 });
 
 export const metadata = {
-  title: "ابزار کاشمر",
-  description: "ابزارآلات کاشمر با کالاها و برندهای متنوع",
+  metadataBase: new URL("https://abzarkashmar.ir"),
+
+  manifest: "/manifest.webmanifest",
+  
+  title: {
+    default: "ابزار کاشمر | فروشگاه اینترنتی ابزارآلات",
+    template: "%s | ابزار کاشمر",
+  },
+
+  description:
+    "فروشگاه اینترنتی ابزار کاشمر؛ خرید انواع ابزارآلات برقی، شارژی، بادی، دستی، جوش و برش، ابزار تعمیرگاهی و لوازم جانبی با بهترین قیمت، ارسال سریع و امکان خرید اقساطی.",
+
+  keywords: [
+    "ابزار کاشمر",
+    "خرید ابزار",
+    "ابزارآلات",
+    "ابزار برقی",
+    "ابزار شارژی",
+    "ابزار بادی",
+    "ابزار دستی",
+    "جوش و برش",
+    "دریل",
+    "فرز",
+    "بکس",
+    "خرید اقساطی ابزار",
+    "ابزار صنعتی",
+  ],
+
+  authors: [
+    {
+      name: "ابزار کاشمر",
+    },
+  ],
+
+  creator: "ابزار کاشمر",
+
+  publisher: "ابزار کاشمر",
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
+
   icons: {
-    icon: "/img/favicon.png", 
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+  },
+
+  openGraph: {
+    title: "ابزار کاشمر",
+
+    description:
+      "خرید ابزارآلات برقی، شارژی، بادی، دستی و صنعتی با بهترین قیمت و امکان خرید اقساطی.",
+
+    url: "https://abzarkashmar.ir",
+
+    siteName: "ابزار کاشمر",
+
+    locale: "fa_IR",
+
+    type: "website",
+
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "فروشگاه اینترنتی ابزار کاشمر",
+      },
+    ],
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "ابزار کاشمر",
+    description:
+      "خرید ابزارآلات با بهترین قیمت و امکان خرید اقساطی.",
+    images: ["/og-image.jpg"],
   },
 };
 

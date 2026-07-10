@@ -31,7 +31,7 @@ export default function ProductCard({ product }) {
       };
 
       // ارسال درخواست به سرور
-      const res = await fetch("https://backabzar.onrender.com/api/cart/add", {
+      const res = await fetch("https://abzarkashmar.ir/api/cart/add", {
         method: "POST",
         headers,
         body: JSON.stringify({

@@ -76,7 +76,7 @@ export default function Footer() {
           <div className="flex justify-center md:justify-start gap-4">
 
             <Link
-              href="ii"
+              href="https://www.instagram.com/abzar_kashmar?igsh=MW1uMThpMTRrZTUyMg=="
               className="w-12 h-12 flex items-center justify-center rounded-full border border-gray-300 transition-all duration-300 group"
             >
               <Instagram
@@ -86,7 +86,7 @@ export default function Footer() {
             </Link>
 
             <Link
-              href="ii"
+              href="https://t.me/abzar_kashmar_aghsat"
               className="w-12 h-12 flex items-center justify-center rounded-full border border-gray-300 transition-all duration-300 group"
             >
               <Send
@@ -125,7 +125,7 @@ export default function Footer() {
             <div className="flex items-center justify-between gap-6">
               {/* سمت چپ: لوگو */}
               <div className="flex-shrink-0">
-                <Image src="/img/logo.png" alt="Logo" width={100} height={100} />
+                <Image src="/img/mainLogo.png" alt="Logo" width={100} height={100} />
               </div>
 
               {/* سمت راست: متن‌ها */}

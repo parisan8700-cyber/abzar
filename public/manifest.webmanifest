@@ -1,0 +1,18 @@
+{
+    "name": "ابزار کاشمر",
+    "short_name": "ابزار کاشمر",
+    "description": "فروشگاه اینترنتی ابزار کاشمر",
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#facc15",
+    "lang": "fa",
+    "icons": [
+        {
+            "src": "/favicon.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

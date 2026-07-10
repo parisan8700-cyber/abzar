@@ -65,7 +65,7 @@ export default function Checkout() {
             localStorage.setItem("guestId", guestId);
           }
           const res = await fetch(
-            `https://backabzar.onrender.com/api/cart?guestId=${guestId}`
+            `https://abzarkashmar.ir/api/cart?guestId=${guestId}`
           );
           const data = await res.json();
           setCart(data);
@@ -165,25 +165,16 @@ export default function Checkout() {
       0
     );
 
+    const guestId = !isLoggedIn
+      ? localStorage.getItem("guestId")
+      : null;
+
     const finalFormData = {
       ...formData,
-
       items: cartItems,
-
-      // مبلغی که الان پرداخت می‌شود
-      // amount: totalAmount,
-
-      // // مبلغ پرداخت شده
-      // paidAmount: totalAmount,
-
-      // // مبلغ باقی مانده
-      // remainingAmount: originalTotal - totalAmount,
-
-      // نوع سفارش
       paymentType,
-
-      //نوع پست
       shippingMethod,
+      guestId,
     };
 
     try {

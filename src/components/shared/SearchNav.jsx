@@ -45,7 +45,7 @@ export default function SearchNav() {
   }, [pathname]);
 
   return (
-    <div className="relative w-60 h-[44px] max-[1100]:w-88 rounded-xl p-2 flex items-center gap-3 max-[1100]:mr-4 border-2 border-yellow-300">
+    <div className="relative w-60 h-[44px] max-[1100]:w-88 max-[400]:w-79 rounded-xl p-2 flex items-center gap-3 max-[1100]:mr-4 border-2 border-yellow-300">
       <input
         dir="rtl"
         value={value}

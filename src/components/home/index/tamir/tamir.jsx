@@ -31,8 +31,8 @@ export default function Tamir() {
             <div className="flex items-center w-full">
                 <div className="flex items-center mb-6 w-full">
                     <div className="flex h-10 rounded-tr-2xl rounded-br-2xl w-1 bg-yellow-400" />
-                    <h2 className="px-4 md:text-2xl font-bold text-right whitespace-nowrap">
-                        <span className="text-gray-700">ابزارهای تخصصی تعمیرگاهی</span>
+                    <h2 className="px-4 max-[377px]:text-lg text-2xl font-bold text-right whitespace-nowrap">
+                        <span className="text-gray-700">ابزارهای تعمیرگاهی</span>
                     </h2>
 
                     {/* دکمه‌ها */}

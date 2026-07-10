@@ -2,7 +2,7 @@ import ProductShop from "@/components/shop/Shop";
 
 async function getProductsByCategory(mainSlug, subSlug) {
     const res = await fetch(
-        `https://backabzar.onrender.com/api/products/category/${mainSlug}/${subSlug}`,
+        `https://abzarkashmar.ir/api/products/category/${mainSlug}/${subSlug}`,
         { cache: "no-store" }
     );
 

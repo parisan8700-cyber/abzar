@@ -71,7 +71,8 @@ export default function Navbar() {
         <div className="flex gap-3">
           <ul className="flex gap-3">
             {topLinks.map(({ href, label, Icon }) => (
-              <li key={href} className="relative group">
+              <li key={href}
+                className={href === "/contact" ? "block max-[400]:hidden" : "relative group"}>
                 <Link
                   href={href}
                   className="text-gray-600 hover:text-yellow-300 transition-all flex items-center gap-1"

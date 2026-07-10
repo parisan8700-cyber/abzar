@@ -11,7 +11,7 @@ export default function EditProductPage() {
     const [product, setProduct] = useState(null);
 
     useEffect(() => {
-        fetch(`https://backabzar.onrender.com/api/products/id/${id}`)
+        fetch(`/api/products/id/${id}`)
             .then((res) => res.json())
             .then((data) => {
                 setProduct(data);
@@ -19,7 +19,7 @@ export default function EditProductPage() {
     }, [id]);
 
     const handleEdit = async (formData) => {
-        await fetch(`https://backabzar.onrender.com/api/products/${id}`, {
+        await fetch(`https://abzarkashmar.ir/api/products/${id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(formData),

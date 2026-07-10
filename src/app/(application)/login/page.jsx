@@ -43,7 +43,7 @@ export default function Login() {
     try {
       setIsSubmitting(true);
 
-      const endpoint = "https://backabzar.onrender.com/api/users/login";
+      const endpoint = "/api/users/login";
 
       const res = await axios.post(endpoint, userData, {
         headers: { "Content-Type": "application/json" },

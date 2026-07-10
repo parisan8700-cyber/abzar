@@ -53,7 +53,7 @@ export default function Signup() {
         try {
             setIsSubmitting(true);
 
-            const endpoint = "https://backabzar.onrender.com/api/users/register";
+            const endpoint = "/api/users/register";
             // const endpoint = "http://localhost:5000/api/users/register";
 
 

@@ -42,7 +42,7 @@ export default function Basket() {
           guestId = crypto.randomUUID();
           localStorage.setItem("guestId", guestId);
         }
-        const res = await fetch(`https://backabzar.onrender.com/api/cart?guestId=${guestId}`);
+        const res = await fetch(`https://abzarkashmar.ir/api/cart?guestId=${guestId}`);
         const data = await res.json();
         setCart(data);
       }
@@ -158,80 +158,114 @@ export default function Basket() {
         <div className="flex flex-col md:flex-row gap-6 p-4 text-right">
           <div className="w-full md:w-2/3 min-w-0">
             <div className="space-y-8 mb-12">
-              {cart.items.map((item) => (
-                <div key={item.product._id} className="flex flex-col md:flex-row justify-between items-center bg-gray-300 rounded-xl shadow-md p-4">
-                  <div className="flex items-center gap-4 w-full md:w-auto justify-center md:justify-start">
-                    <Image
-                      src={item.product?.images[0] || "/no-image.jpg"}
-                      alt={item.product?.name || "محصول"}
-                      width={80}
-                      height={60}
-                      className="rounded-md border border-gray-300"
-                    />
-                    <div>
-                      <h3 className="text-base font-semibold truncate w-40">{item.product?.name}</h3>
-                      <div className="mt-1">
-                        {item.type === "installment" ? (
-                          <>
-                            <p className="text-sm text-gray-500 line-through">
-                              {item.product?.price?.toLocaleString()} تومان
-                            </p>
+              <div className="space-y-5 mb-12">
+                {cart.items
+                  .filter((item) => item.product)
+                  .map((item) => (
+                    <div
+                      key={item.product?._id}
+                      className="flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:shadow-md md:flex-row md:items-center md:justify-between"
+                    >
+                      {/* اطلاعات محصول */}
+                      <div className="flex w-full items-start gap-3">
 
-                            <p className="text-sm font-bold text-green-600">
-                              {item.price?.toLocaleString()} تومان (پیش‌پرداخت)
-                            </p>
-                          </>
-                        ) : (
-                          <>
-                            {item.product?.discount > 0 ? (
+                        <Image
+                          src={item.product?.images[0] || "/no-image.jpg"}
+                          alt={item.product?.name || "محصول"}
+                          width={90}
+                          height={90}
+                          className="h-20 w-20 flex-shrink-0 rounded-xl border border-slate-200 object-cover sm:h-24 sm:w-24"
+                        />
+
+                        <div className="min-w-0 flex-1">
+
+                          <h3 className="break-words text-sm font-bold text-slate-800 sm:text-base">
+                            {item.product?.name}
+                          </h3>
+
+                          <div className="mt-2">
+
+                            {item.type === "installment" ? (
                               <>
-                                <p className="text-sm text-gray-500 line-through">
-                                  {item.product.price.toLocaleString()} تومان
+                                <p className="text-xs text-slate-400 line-through sm:text-sm">
+                                  {item.product?.price?.toLocaleString()} تومان
                                 </p>
 
-                                <p className="text-base text-green-600">
-                                  {(item.product.price - item.product.discount).toLocaleString()} تومان
+                                <p className="font-bold text-green-600 text-sm sm:text-base">
+                                  {item.price?.toLocaleString()} تومان (پیش‌پرداخت)
                                 </p>
                               </>
                             ) : (
-                              <p className="text-base font-bold">
-                                {item.product?.price?.toLocaleString()} تومان
-                              </p>
-                            )}
-                          </>
-                        )}
-                      </div>
-                      <p className="text-sm text-gray-600">تعداد: {item.quantity}</p>
-                    </div>
-                  </div>
+                              <>
+                                {item.product?.discount > 0 ? (
+                                  <>
+                                    <p className="text-xs text-slate-400 line-through sm:text-sm">
+                                      {item.product.price.toLocaleString()} تومان
+                                    </p>
 
-                  {/* کنترل تعداد */}
-                  <div className="flex gap-2 mt-4 md:mt-0">
-                    <button
-                      onClick={() => handleQuantityChange(item.product._id, "decrease")}
-                      disabled={loadingItems[item.product._id]}
-                      className="bg-yellow-400 px-3 py-1.5 rounded-full hover:bg-yellow-500 disabled:opacity-50"
-                    >
-                      {loadingItems[item.product._id] ? "..." : "-"}
-                    </button>
-                    <p className="text-xl w-8 h-8 bg-gray-100 border border-gray-300 rounded-lg text-center leading-8">
-                      {item.quantity}
-                    </p>
-                    <button
-                      onClick={() => handleQuantityChange(item.product._id, "increase")}
-                      disabled={loadingItems[item.product._id]}
-                      className="bg-yellow-400 px-3 py-1.5 rounded-full hover:bg-yellow-500 disabled:opacity-50"
-                    >
-                      {loadingItems[item.product._id] ? "..." : "+"}
-                    </button>
-                  </div>
-                </div>
-              ))}
+                                    <p className="font-bold text-green-600 text-sm sm:text-base">
+                                      {(item.product.price - item.product.discount).toLocaleString()} تومان
+                                    </p>
+                                  </>
+                                ) : (
+                                  <p className="font-bold text-slate-800 text-sm sm:text-base">
+                                    {item.product?.price?.toLocaleString()} تومان
+                                  </p>
+                                )}
+                              </>
+                            )}
+
+                          </div>
+
+                          <p className="mt-2 text-xs text-slate-500 sm:text-sm">
+                            تعداد: {item.quantity}
+                          </p>
+
+                        </div>
+
+                      </div>
+
+                      {/* کنترل تعداد */}
+                      <div className="flex w-full justify-center md:w-auto md:justify-end">
+
+                        <div className="flex items-center gap-2 rounded-xl bg-slate-100 p-1">
+
+                          <button
+                            onClick={() =>
+                              handleQuantityChange(item.product?._id, "decrease")
+                            }
+                            disabled={loadingItems[item.product._id]}
+                            className="flex h-9 w-9 items-center justify-center rounded-lg bg-yellow-400 font-bold transition hover:bg-yellow-500 disabled:opacity-50"
+                          >
+                            {loadingItems[item.product._id] ? "..." : "-"}
+                          </button>
+
+                          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white font-bold">
+                            {item.quantity}
+                          </div>
+
+                          <button
+                            onClick={() =>
+                              handleQuantityChange(item.product?._id, "increase")
+                            }
+                            disabled={loadingItems[item.product._id]}
+                            className="flex h-9 w-9 items-center justify-center rounded-lg bg-yellow-400 font-bold transition hover:bg-yellow-500 disabled:opacity-50"
+                          >
+                            {loadingItems[item.product._id] ? "..." : "+"}
+                          </button>
+
+                        </div>
+
+                      </div>
+
+                    </div>
+                  ))}
+              </div>
             </div>
           </div>
 
           {/* پرداخت */}
-          <div className="w-full md:w-1/3 bg-gray-300 p-6 rounded-xl shadow-lg">
+          <div className="w-full md:w-1/3 bg-white p-6 rounded-xl shadow-lg">
             <h3 className="text-2xl font-bold mb-4 ">مجموع کل سبدخرید:</h3>
             <div className="py-5">
               <p className="text-md text-gray-800">مبلغ کل: {totalPrice.toLocaleString()} تومان</p>

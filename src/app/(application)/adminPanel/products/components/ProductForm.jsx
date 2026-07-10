@@ -185,7 +185,7 @@ export default function ProductForm({ initialData = {}, onSubmit }) {
         try {
             setUploading(true);
 
-            const res = await fetch("https://backabzar.onrender.com/api/upload/image", {
+            const res = await fetch("https://abzarkashmar.ir/api/upload/image", {
                 method: "POST",
                 body: formData,
             });
