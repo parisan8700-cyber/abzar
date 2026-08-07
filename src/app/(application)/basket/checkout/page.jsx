@@ -301,35 +301,16 @@ export default function Checkout() {
                           }`}
                       >
                         <div>
-                          <p className="font-semibold">📦 پست پیشتاز</p>
+                          <p className="font-semibold">
+                            🚚 تیپاکس
+                          </p>
                           <p className="text-sm text-gray-500">
-                            ۲ تا ۵ روز کاری
+                            هزینه ارسال در مقصد دریافت می‌شود
                           </p>
                         </div>
 
                         <div className="font-bold text-blue-600">
                           100,000 تومان
-                        </div>
-                      </div>
-
-                      {/* EXPRESS */}
-                      <div
-                        onClick={() => setShippingMethod("express")}
-                        className={`cursor-pointer border rounded-2xl p-4 flex justify-between items-center transition
-                        ${shippingMethod === "express"
-                            ? "border-yellow-500 bg-yellow-50"
-                            : "hover:bg-gray-50"
-                          }`}
-                      >
-                        <div>
-                          <p className="font-semibold">⚡ پست سریع</p>
-                          <p className="text-sm text-gray-500">
-                            ارسال فوری
-                          </p>
-                        </div>
-
-                        <div className="font-bold text-yellow-600">
-                          200,000 تومان
                         </div>
                       </div>
 

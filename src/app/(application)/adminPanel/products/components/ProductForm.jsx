@@ -119,7 +119,7 @@ export default function ProductForm({ initialData = {}, onSubmit }) {
     };
 
 
-    const brands = ["Arva", "Tosan", "Ronix", "Crown", "Rabin", "Strong", "سایر"];
+     const brands = ["ARVA", "KAT", "ZIMBERG","TOSAN", "HARDEX", "HARBOUR", "TANOS", "CROWN", "TOPEX", "STRONG","TIVAN","TOPTUL", "TURBO","IVEK", "ARIEL","WORKPRO","AZD", "LEKA","ROKSER","HYUNDAI","DWT","NEC","NOVA", "سایر"];
     const categoryIds = formData.categories.map(c => c.sub || c.main);
 
     const handleChange = (e) => {

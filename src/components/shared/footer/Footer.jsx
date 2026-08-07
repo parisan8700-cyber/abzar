@@ -14,7 +14,7 @@ export default function Footer() {
             <div className="flex items-center">
               {/* <Image src="/img/logo.png" alt="Logo" width={100} height={100} /> */}
               <Image
-                src="/img/mainLogo.png"
+                src="/img/favicon.png"
                 alt="لوگو"
                 width={80}
                 height={80}
@@ -54,16 +54,34 @@ export default function Footer() {
             </div>
 
             {/* لوگو */}
-            <div className="flex justify-start gap-3">
-              <a href="https://zibal.ir" target="_blank" rel="noopener noreferrer">
+            <div className="flex gap-3">
+              <div className="w-16 h-16 rounded-xl flex items-center justify-center">
+                <a
+                  referrerPolicy="origin"
+                  target="_blank"
+                  href='https://trustseal.enamad.ir/?id=538361&Code=DeHmoaDNufjVYR5MYcGA3A958N0y5d5N'
+                >
+                  <img
+                    referrerPolicy="origin"
+                    src='https://trustseal.enamad.ir/logo.aspx?id=538361&Code=DeHmoaDNufjVYR5MYcGA3A958N0y5d5N'
+                    alt="نماد اعتماد الکترونیکی"
+                    style={{ cursor: "pointer" }}
+                  />
+                </a>
+              </div>
+
+
+
+              <div className="w-16 h-16 rounded-xl flex items-center justify-center">
+
                 <Image
                   src="/img/zibal.webp"
-                  alt="zibal"
-                  width={140}
-                  height={20}
-                  className="w-20 h-22"
+                  alt="نماد"
+                  width={55}
+                  height={55}
                 />
-              </a>
+
+              </div>
             </div>
           </div>
         </div>
@@ -108,7 +126,7 @@ export default function Footer() {
             </Link> */}
 
             <Link
-              href="ii"
+              href="https://rubika.ir/abzar_kashmar1"
               className="w-12 h-12 flex items-center justify-center rounded-full border border-gray-300 transition-all duration-300"
             >
               <Image
@@ -125,7 +143,7 @@ export default function Footer() {
             <div className="flex items-center justify-between gap-6">
               {/* سمت چپ: لوگو */}
               <div className="flex-shrink-0">
-                <Image src="/img/mainLogo.png" alt="Logo" width={100} height={100} />
+                <Image src="/img/favicon.png" alt="Logo" width={100} height={100} />
               </div>
 
               {/* سمت راست: متن‌ها */}
@@ -142,7 +160,7 @@ export default function Footer() {
 
           <div className="border-t border-gray-500 pt-3 text-sm grid gap-5">
             <p>تمام حقوق مادی و معنوی مطالب موجود در این سایت متعلق به مجموعه ابزار کاشمر می‌باشد.</p>
-            <a href="https://parisan0487.github.io">طراحی شده توسط : <span className="text-yellow-400 underline underline-offset-2">پریسان غلامی</span></a>
+            <a href="https://parisan0487.github.io" target="_blank">طراحی شده توسط : <span className="text-yellow-400 underline underline-offset-2">پریسان غلامی</span></a>
           </div>
         </div>
       </div>

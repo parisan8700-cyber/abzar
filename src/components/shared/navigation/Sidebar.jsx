@@ -71,7 +71,7 @@ export default function Sidebar() {
         <div className="flex items-center justify-between p-5 bg-orange-50/40">
           <Link href="/" onClick={() => setIsOpen(false)}>
             <Image
-              src="/img/logo.png"
+              src="/img/favicon.png"
               alt="logo"
               width={100}
               height={100}
@@ -162,16 +162,6 @@ export default function Sidebar() {
             </li>
 
             {/* سایر لینک‌ها */}
-
-            <li>
-              <Link
-                href="/shop/porforoush"
-                onClick={() => setIsOpen(false)}
-                className="block px-3 py-3 rounded-xl hover:bg-orange-100"
-              >
-                پرفروش‌ها
-              </Link>
-            </li>
 
             <li>
               <Link

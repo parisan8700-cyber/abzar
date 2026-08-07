@@ -24,7 +24,7 @@ export default function ProductShop({ data }) {
   const isPriceFiltered = minPrice || maxPrice;
 
 
-  const brands = ["Arva", "Tosan", "Ronix", "Crown", "Rabin", "Strong", "سایر"];
+  const brands = ["ARVA", "KAT", "ZIMBERG","TOSAN","ROKSER", "HARDEX", "HARBOUR", "TANOS", "TOPEX", "STRONG","TIVAN","TOPTUL", "TURBO","IVEK", "ARIEL", "LEKA","WORKPRO","AZD","NOVA", "سایر"];
 
   useEffect(() => {
     setLoading(false);

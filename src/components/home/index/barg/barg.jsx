@@ -17,7 +17,7 @@ export default function Barg() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        Fetch.get("/api/products/category/barghi-va-sharji")
+        Fetch.get("/api/products/category/barghi")
             .then((res) => {
                 setProducts(res.data);
             })
@@ -34,12 +34,12 @@ export default function Barg() {
                 <div className="flex items-center mb-6 w-full">
                     <div className="flex h-10 rounded-tr-2xl rounded-br-2xl w-1 bg-yellow-400" />
                     <h2 className="px-4 max-[415px]:text-lg text-2xl font-bold text-right whitespace-nowrap">
-                        <span className="text-gray-700">ابزارهای برقی و شارژی</span>{" "}
+                        <span className="text-gray-700">ابزارهای برقی</span>{" "}
                     </h2>
 
                     {/* دکمه‌ها */}
                     <div className="absolute left-1 lg:left-8 flex gap-2">
-                        <Link href="/shop/barghi-va-sharji">
+                        <Link href="/shop/barghi">
                             <button
                                 className="w-36 h-10 flex items-center justify-center bg-yellow-400 text-black rounded-lg 
              hover:bg-yellow-300 hover:text-white transition-colors duration-300"

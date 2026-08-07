@@ -90,7 +90,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      <header className="flex justify-between items-center px-3 text-right">
+      <header className="flex justify-between items-center px-3 mb-4 text-right">
         <Sidebar />
 
 
@@ -98,10 +98,10 @@ export default function Navbar() {
         <div className="flex items-center gap-6">
           <Link href="/">
             <Image
-              src="/img/mainLogo.png"
+              src="/img/favicon.png"
               alt="لوگو"
-              width={80}
-              height={80}
+              width={70}
+              height={70}
             />
           </Link>
 

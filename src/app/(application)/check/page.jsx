@@ -44,7 +44,7 @@ export default function Check() {
                     {/* دکمه‌های ارتباط */}
                     <div className="mt-6 flex flex-col sm:flex-row gap-3">
                         <motion.a
-                            href="https://t.me/username"
+                            href="https://t.me/abzar_kashmar_aghsat"
                             target="_blank"
                             className="flex items-center justify-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-white px-4 py-2 rounded-lg transition-colors"
                             whileHover={{ scale: 1.05 }}
@@ -53,7 +53,7 @@ export default function Check() {
                             📩 پیام در تلگرام
                         </motion.a>
                         <motion.a
-                            href="tel:09123456789"
+                            href="tel:09151203083"
                             className="flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-colors"
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
@@ -95,7 +95,7 @@ export default function Check() {
             >
                 <h2 className="text-xl font-semibold mb-4">شرایط چک پس از رزرو پیش‌پرداخت</h2>
                 <p className="text-md text-gray-700 leading-relaxed mb-3">
-                    چک‌ها را به کد ملی <span className="font-medium">000000000000</span>
+                    چک‌ها را به کد ملی <span className="font-medium">0890340773</span>
                     (محمدرضا غلامی) ثبت و به آدرس زیر ارسال فرمایید:
                 </p>
                 <p className="text-md text-gray-700 leading-relaxed mb-3">

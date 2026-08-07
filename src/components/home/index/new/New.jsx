@@ -74,7 +74,7 @@ export default function New() {
                     <SkeletonProductCard />
                   </SwiperSlide>
                 ))
-                : products.map((product) => (
+                : [...products].reverse().map((product) => (
                   <SwiperSlide key={product._id}>
                     <ProductCard product={product} />
                   </SwiperSlide>

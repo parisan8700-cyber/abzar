@@ -7,14 +7,7 @@ import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 
-const categories = [
-    { icon: "/img/1.png", title: "برقی و شارژی", slug: "barghi-va-sharji" },
-    { icon: "/img/2.png", title: "بادی", slug: "badi" },
-    { icon: "/img/3.png", title: "جوش و برش", slug: "joosh-va-boresh" },
-    { icon: "/img/4.png", title: "تاسیسات و آبرسانی", slug: "abresani" },
-    { icon: "/img/5.png", title: "تخصصی تعمیرگاهی", slug: "tamirgahi" },
-    { icon: "/img/6.png", title: "جرثقیل و لیفتینگ", slug: "jeraghil-lifting" },
-];
+const categories = [ { icon: "/img/12.png", title: "برقی و شارژی", slug: "barghi-va-sharji" }, { icon: "/img/16.png", title: "بادی", slug: "badi" }, { icon: "/img/13.png", title: "جوش و برش", slug: "joosh-va-boresh" }, { icon: "/img/17.png", title: "دستی", slug: "abzar-dasti" }, { icon: "/img/15.png", title: "جرثقیل و لیفتینگ", slug: "jeraghil-lifting" }, { icon: "/img/14.png", title: "گاراژی", slug: "tamirgahi" }, ];
 
 export default function CategorySlider() {
     const prevRef = useRef(null);
@@ -74,15 +67,91 @@ export default function CategorySlider() {
                     {categories.map((cat, i) => (
                         <SwiperSlide key={i}>
                             <Link href={`/category/${cat.slug}`} className="w-full block">
-                                <div className="bg-[#f1f4f7] hover:bg-yellow-300 rounded-xl shadow-sm p-3 flex flex-col items-center justify-center cursor-pointer transition-all duration-500 w-full h-[110px] sm:h-[140px]">
-                                    <img
-                                        src={cat.icon}
-                                        alt={cat.title}
-                                        className="h-12 sm:h-16 object-contain mb-2 transition-all duration-500"
-                                    />
-                                    <span className="text-[10px] sm:text-sm md:text-base font-medium text-center text-black leading-tight">
+                                <div
+                                    className="
+    group
+    relative
+    overflow-hidden
+    rounded-2xl
+    border
+    border-yellow-200
+    bg-gradient-to-b
+    from-white
+    to-yellow-50
+    shadow-sm
+
+    p-3
+
+    flex
+    flex-col
+    items-center
+    justify-center
+
+    h-[110px]
+    sm:h-[140px]
+
+    transition-all
+    duration-500
+
+    hover:-translate-y-1
+    hover:border-yellow-400
+    hover:shadow-[0_12px_30px_rgba(255,193,7,.25)]
+"
+                                >
+                                    {/* Glow */}
+                                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-[radial-gradient(circle_at_center,rgba(255,213,79,.18),transparent_70%)]"></div>
+
+                                    {/* نوار بالا */}
+                                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-500"></div>
+
+                                    {/* آیکن */}
+                                    <div
+                                        className="
+        relative
+        w-12
+        h-12
+        sm:w-16
+        sm:h-16
+        rounded-full
+        bg-gradient-to-br
+        from-yellow-300
+        to-yellow-500
+        flex
+        items-center
+        justify-center
+        shadow-md
+        transition-all
+        duration-500
+        group-hover:scale-110
+        group-hover:rotate-6
+    "
+                                    >
+                                        <img
+                                            src={cat.icon}
+                                            alt={cat.title}
+                                            className="w-13 h-13 object-contain"
+                                        />
+                                    </div>
+
+                                    <span
+                                        className="
+        mt-2
+        text-[10px]
+        sm:text-sm
+        md:text-base
+        font-semibold
+        text-center
+        text-gray-800
+        leading-tight
+    "
+                                    >
                                         {cat.title}
                                     </span>
+
+                                    {/* دایره‌های پس‌زمینه */}
+                                    <div className="absolute -left-6 -bottom-6 w-16 h-16 rounded-full bg-yellow-300/20 group-hover:scale-150 transition duration-700"></div>
+
+                                    <div className="absolute -right-6 -top-6 w-12 h-12 rounded-full bg-yellow-400/20 group-hover:scale-150 transition duration-700"></div>
                                 </div>
                             </Link>
                         </SwiperSlide>

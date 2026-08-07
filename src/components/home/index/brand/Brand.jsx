@@ -5,11 +5,11 @@ import Image from "next/image";
 
 const brands = [
   { name: "Samsung", src: "/img/brand1.webp" },
-  { name: "Samsung", src: "/img/brand2.webp" },
+  { name: "Samsung", src: "/img/ivek.svg" },
   { name: "Microsoft", src: "/img/brand3.webp" },
   { name: "Asus", src: "/img/brand4.webp" },
-  { name: "Microsoft", src: "/img/brand5.webp" },
-  { name: "Asus", src: "/img/brand6.webp" },
+  { name: "Microsoft", src: "/img/strong.png" },
+  { name: "Asus", src: "/img/topex.png" },
 ];
 
 export default function Brand() {
