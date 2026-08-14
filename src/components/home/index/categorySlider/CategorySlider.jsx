@@ -7,7 +7,7 @@ import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 
-const categories = [ { icon: "/img/12.png", title: "برقی و شارژی", slug: "barghi-va-sharji" }, { icon: "/img/16.png", title: "بادی", slug: "badi" }, { icon: "/img/13.png", title: "جوش و برش", slug: "joosh-va-boresh" }, { icon: "/img/17.png", title: "دستی", slug: "abzar-dasti" }, { icon: "/img/15.png", title: "جرثقیل و لیفتینگ", slug: "jeraghil-lifting" }, { icon: "/img/14.png", title: "گاراژی", slug: "tamirgahi" }, ];
+const categories = [ { icon: "/img/12.png", title: "برقی", slug: "barghi" }, { icon: "/img/16.png", title: "بادی", slug: "badi" }, { icon: "/img/13.png", title: "جوش و برش", slug: "joosh-va-boresh" }, { icon: "/img/17.png", title: "دستی", slug: "abzar-dasti" }, { icon: "/img/15.png", title: "جرثقیل و لیفتینگ", slug: "jeraghil-lifting" }, { icon: "/img/14.png", title: "گاراژی", slug: "tamirgahi" }, ];
 
 export default function CategorySlider() {
     const prevRef = useRef(null);
@@ -66,7 +66,7 @@ export default function CategorySlider() {
                 >
                     {categories.map((cat, i) => (
                         <SwiperSlide key={i}>
-                            <Link href={`/category/${cat.slug}`} className="w-full block">
+                            <Link href={`/shop/${cat.slug}`} className="w-full block">
                                 <div
                                     className="
     group

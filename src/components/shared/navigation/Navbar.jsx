@@ -86,7 +86,7 @@ export default function Navbar() {
         </div>
 
         <div className="text-gray-600 hover:text-yellow-300 transition-all flex items-center text-xs sm:text-sm">
-          <p>پشتیبان شما هستیم : 09151203083</p>
+          <p>پشتیبان شما هستیم : 05155221455</p>
         </div>
       </div>
 

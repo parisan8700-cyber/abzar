@@ -262,6 +262,10 @@ export default function ProductsPage() {
                                 </th>
 
                                 <th className="text-right py-4 px-6 font-semibold">
+                                    موجودی
+                                </th>
+
+                                <th className="text-right py-4 px-6 font-semibold">
                                     دسته‌بندی
                                 </th>
 
@@ -280,7 +284,7 @@ export default function ProductsPage() {
                                 <tr>
 
                                     <td
-                                        colSpan={4}
+                                        colSpan={5}
                                         className="text-center py-8 text-gray-500"
                                     >
                                         {search.trim()
@@ -310,6 +314,18 @@ export default function ProductsPage() {
 
                                     <td className="py-3 px-6 font-semibold">
                                         {product.price?.toLocaleString()} تومان
+                                    </td>
+
+                                    <td className="py-3 px-6">
+                                        {product.stock <= 0 ? (
+                                            <span className="text-red-600 font-bold">
+                                                اتمام موجودی
+                                            </span>
+                                        ) : (
+                                            <span className="text-green-600 font-bold">
+                                                {product.stock.toLocaleString("fa-IR")} عدد
+                                            </span>
+                                        )}
                                     </td>
 
                                     <td className="py-3 px-6">
@@ -480,10 +496,9 @@ export default function ProductsPage() {
                                         h-10
                                         rounded-xl
                                         transition-all
-                                        ${
-                                            currentPage === page
-                                                ? "bg-yellow-400 text-white shadow-lg scale-105"
-                                                : "bg-white border hover:bg-yellow-100"
+                                        ${currentPage === page
+                                            ? "bg-yellow-400 text-white shadow-lg scale-105"
+                                            : "bg-white border hover:bg-yellow-100"
                                         }
                                     `}
                                 >

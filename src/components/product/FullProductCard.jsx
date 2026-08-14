@@ -144,6 +144,8 @@ export default function FullProduct() {
     fetchRelated();
   }, [product]);
 
+  const isOutOfStock = product?.stock <= 0;
+
   return (
     <div dir="rtl">
       <Breadcrumb
@@ -241,6 +243,25 @@ export default function FullProduct() {
                 <div className="text-xl md:text-2xl font-bold text-black mb-4">
                   {formatPrice(getFinalPrice(product.price, product.discount))} تومان
                 </div>
+
+                {/* موجودی محصول */}
+                <div className="mb-5">
+                  {product?.stock <= 0 ? (
+                    <div className="inline-flex items-center gap-2 bg-red-50 border border-red-200 text-red-600 px-4 py-2 rounded-xl font-bold text-sm">
+                      <span className="w-2 h-2 bg-red-500 rounded-full"></span>
+                      اتمام موجودی
+                    </div>
+                  ) : (
+                    <div className="inline-flex items-center gap-2 bg-green-50 border border-green-200 text-green-700 px-4 py-2 rounded-xl text-sm">
+                      <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                      موجودی:
+                      <span className="font-bold">
+                        {product.stock.toLocaleString("fa-IR")}
+                      </span>
+                      عدد
+                    </div>
+                  )}
+                </div>
               </>
             )}
 
@@ -249,15 +270,28 @@ export default function FullProduct() {
               <div className="flex gap-2 order-2 sm:order-1 flex-wrap">
                 <button
                   onClick={addToCart}
-                  className="flex items-center justify-center gap-2 px-4 sm:px-5 py-2 border border-yellow-400 hover:bg-yellow-500 text-md font-semibold rounded-lg transition-colors duration-300 shadow-md"
+                  disabled={isOutOfStock}
+                  className={`flex items-center justify-center gap-2 px-4 sm:px-5 py-2 border text-md font-semibold rounded-lg transition-colors duration-300 shadow-md
+    ${isOutOfStock
+                      ? "bg-gray-200 border-gray-300 text-gray-400 cursor-not-allowed"
+                      : "border-yellow-400 hover:bg-yellow-500"
+                    }
+  `}
                 >
                   <ShoppingCartIcon className="w-4 h-4" />
-                  خرید نقدی
+
+                  {isOutOfStock ? "اتمام موجودی" : "خرید نقدی"}
                 </button>
 
                 <button
                   onClick={addToCartInstallment}
-                  className="flex items-center justify-center gap-2 px-4 sm:px-5 py-2 border border-green-500 hover:bg-green-600 text-md font-semibold rounded-lg transition-colors duration-300 shadow-md"
+                  disabled={isOutOfStock}
+                  className={`flex items-center justify-center gap-2 px-4 sm:px-5 py-2 border text-md font-semibold rounded-lg transition-colors duration-300 shadow-md
+    ${isOutOfStock
+                      ? "bg-gray-200 border-gray-300 text-gray-400 cursor-not-allowed"
+                      : "border-green-500 hover:bg-green-600"
+                    }
+  `}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

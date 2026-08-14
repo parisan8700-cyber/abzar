@@ -25,7 +25,7 @@ export default function Contact() {
                 کاشمر، بلوار فروتقه، بعد از امام‌رضا(ع)15 مراجعه کنید.
               </li>
               <li>
-                <strong>روش دوم:</strong> اگر نتوانستید به صورت حضوری به فروشگاه تشریف بیارید می‌توانید با شماره تماس <a href="tel:09151203083" className="text-blue-600 hover:underline">09151203083</a> تماس بگیرید.
+                <strong>روش دوم:</strong> اگر نتوانستید به صورت حضوری به فروشگاه تشریف بیارید می‌توانید با شماره تماس <a href="tel:05155221455" className="text-blue-600 hover:underline">05155221455</a> تماس بگیرید.
               </li>
               <li>
                 <strong>روش سوم:</strong> شما عزیزان می‌توانید به اینستاگرام ما به آیدی <a href="https://instagram.com/abzar-kashmar" target="_blank" rel="noopener noreferrer" className="text-pink-600 hover:underline">@abzar-kashmar</a> پیام دهید و از آنجا با ما در ارتباط باشید.
@@ -50,7 +50,7 @@ export default function Contact() {
               </div>
               <div>
                 <strong>شماره</strong>
-                <br /> 09151203083
+                <br /> 05155221455
               </div>
               <div>
                 <strong>شماره</strong>
@@ -59,10 +59,10 @@ export default function Contact() {
             </div>
 
             <div className="flex gap-4 mt-4">
-              <a href="https://t.me/yourchannel" className="text-xl text-black hover:text-[#229ED9]" target="_blank" rel="noopener noreferrer">
+              <a href="https://t.me/abzar_kashmar_aghsat" className="text-xl text-black hover:text-[#229ED9]" target="_blank" rel="noopener noreferrer">
                 <Send size={24} />
               </a>
-              <a href="https://instagram.com/yourprofile" className="text-xl text-black hover:text-[#E1306C]" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.instagram.com/abzar_kashmar?igsh=MW1uMThpMTRrZTUyMg==" className="text-xl text-black hover:text-[#E1306C]" target="_blank" rel="noopener noreferrer">
                 <Instagram size={24} />
               </a>
             </div>

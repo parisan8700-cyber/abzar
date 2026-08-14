@@ -248,13 +248,32 @@ export default function Checkout() {
               <div className="bg-gray-50 rounded-2xl p-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
 
-                  {renderInput("lastName", "نام خانوادگی")}
+                  {/* نام */}
                   {renderInput("firstName", "نام")}
-                  {renderInput("city", "شهر")}
+
+                  {/* نام خانوادگی */}
+                  {renderInput("lastName", "نام خانوادگی")}
+
+                  {/* استان */}
                   {renderInput("province", "استان")}
-                  {renderInput("address", "آدرس خیابان", "sm:col-span-2")}
+
+                  {/* شهر */}
+                  {renderInput("city", "شهر")}
+
+                  {/* آدرس */}
+                  {renderInput(
+                    "address",
+                    "آدرس خیابان",
+                    "sm:col-span-2"
+                  )}
+
+                  {/* کد پستی */}
                   {renderInput("postalCode", "کدپستی")}
+
+                  {/* تلفن */}
                   {renderInput("phone", "تلفن")}
+
+                  {/* توضیحات سفارش */}
                   {renderInput(
                     "description",
                     "توضیحات سفارش (اختیاری)",
@@ -262,7 +281,7 @@ export default function Checkout() {
                     true
                   )}
 
-                  {/* SHIPPING */}
+                  {/* روش ارسال */}
                   <div className="sm:col-span-2 mt-2">
                     <h3 className="font-bold text-lg mb-4 text-gray-800">
                       🚚 روش ارسال
@@ -270,17 +289,20 @@ export default function Checkout() {
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 
-                      {/* PICKUP */}
+                      {/* تحویل حضوری */}
                       <div
                         onClick={() => setShippingMethod("pickup")}
                         className={`cursor-pointer border rounded-2xl p-4 flex justify-between items-center transition
-                        ${shippingMethod === "pickup"
+            ${shippingMethod === "pickup"
                             ? "border-green-500 bg-green-50"
                             : "hover:bg-gray-50"
                           }`}
                       >
                         <div>
-                          <p className="font-semibold">🏪 تحویل حضوری</p>
+                          <p className="font-semibold">
+                            🏪 تحویل حضوری
+                          </p>
+
                           <p className="text-sm text-gray-500">
                             دریافت از فروشگاه
                           </p>
@@ -291,11 +313,11 @@ export default function Checkout() {
                         </div>
                       </div>
 
-                      {/* POST */}
+                      {/* تیپاکس */}
                       <div
                         onClick={() => setShippingMethod("post")}
                         className={`cursor-pointer border rounded-2xl p-4 flex justify-between items-center transition
-                        ${shippingMethod === "post"
+            ${shippingMethod === "post"
                             ? "border-blue-500 bg-blue-50"
                             : "hover:bg-gray-50"
                           }`}
@@ -304,6 +326,7 @@ export default function Checkout() {
                           <p className="font-semibold">
                             🚚 تیپاکس
                           </p>
+
                           <p className="text-sm text-gray-500">
                             هزینه ارسال در مقصد دریافت می‌شود
                           </p>
@@ -319,51 +342,51 @@ export default function Checkout() {
 
                 </div>
 
-                {/* SUMMARY */}
-                <div className="bg-white rounded-2xl p-5 border mt-6 space-y-3">
+              {/* SUMMARY */}
+              <div className="bg-white rounded-2xl p-5 border mt-6 space-y-3">
 
-                  <div className="flex justify-between text-gray-600">
-                    <span>هزینه ارسال</span>
-                    <span>{shippingCost.toLocaleString()} تومان</span>
-                  </div>
+                <div className="flex justify-between text-gray-600">
+                  <span>هزینه ارسال</span>
+                  <span>{shippingCost.toLocaleString()} تومان</span>
+                </div>
 
-                  <div className="flex justify-between text-base font-bold text-gray-900 border-t pt-3">
-                    <span>مبلغ قابل پرداخت</span>
-                    <span className="text-green-600">
-                      {finalAmount.toLocaleString()} تومان
-                    </span>
-                  </div>
-
+                <div className="flex justify-between text-base font-bold text-gray-900 border-t pt-3">
+                  <span>مبلغ قابل پرداخت</span>
+                  <span className="text-green-600">
+                    {finalAmount.toLocaleString()} تومان
+                  </span>
                 </div>
 
               </div>
 
-              {/* SUBMIT */}
-              <button
-                type="submit"
-                className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-bold p-4 rounded-2xl hover:scale-[1.01] transition"
-              >
-                ثبت سفارش
-              </button>
-
-            </form>
-
           </div>
-        </div>
-      </div>
 
-      {/* BACK BUTTON */}
-      <div className="mt-6 text-center">
-        <Link href="/basket">
+          {/* SUBMIT */}
           <button
-            type="button"
-            className="border border-gray-300 hover:bg-gray-200 transition px-6 py-3 rounded-xl"
+            type="submit"
+            className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-bold p-4 rounded-2xl hover:scale-[1.01] transition"
           >
-            بازگشت
+            ثبت سفارش
           </button>
-        </Link>
-      </div>
 
+        </form>
+
+      </div>
     </div>
+      </div >
+
+    {/* BACK BUTTON */ }
+    < div className = "mt-6 text-center" >
+      <Link href="/basket">
+        <button
+          type="button"
+          className="border border-gray-300 hover:bg-gray-200 transition px-6 py-3 rounded-xl"
+        >
+          بازگشت
+        </button>
+      </Link>
+      </div >
+
+    </div >
   );
 }
