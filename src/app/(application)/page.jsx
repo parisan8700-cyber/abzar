@@ -10,6 +10,7 @@ import Barg from "@/components/home/index/barg/barg";
 import Bady from "@/components/home/index/bady/bady";
 import Tamir from "@/components/home/index/tamir/tamir";
 import Jush from "@/components/home/index/jush/jush";
+import Karvash from "@/components/home/index/karvash/karvash";
 
 export default async function Home() {
   return (
@@ -23,6 +24,7 @@ export default async function Home() {
       <New/>
       <Barg />
       <Bady />
+      <Karvash />
       <Tamir />
       <Jush />
       <Brand />
