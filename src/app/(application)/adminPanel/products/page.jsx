@@ -22,8 +22,9 @@ export default function ProductsPage() {
     // جستجو
     const [search, setSearch] = useState("");
 
-    const ITEMS_PER_PAGE = 6;
+    const ITEMS_PER_PAGE = 10;
     const [currentPage, setCurrentPage] = useState(1);
+    const [pageInput, setPageInput] = useState("");
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -158,6 +159,31 @@ export default function ProductsPage() {
         }
 
         return pages;
+    };
+
+
+    const goToPage = () => {
+        const page = Number(pageInput);
+
+        if (!pageInput || isNaN(page)) {
+            toast.error("شماره صفحه را وارد کنید");
+            return;
+        }
+
+        if (page < 1 || page > totalPages) {
+            toast.error(`شماره صفحه باید بین ۱ تا ${totalPages} باشد`);
+            return;
+        }
+
+        setCurrentPage(page);
+        setPageInput("");
+    };
+
+
+    const handlePageInputKeyDown = (e) => {
+        if (e.key === "Enter") {
+            goToPage();
+        }
     };
 
     return (
@@ -445,34 +471,40 @@ export default function ProductsPage() {
             )}
 
             {/* Pagination */}
+            {/* Pagination */}
             {totalPages > 1 && (
 
-                <div className="mt-8 flex justify-center items-center gap-2 flex-wrap">
+                <div className="mt-8 flex flex-col items-center gap-5">
 
-                    <button
-                        disabled={currentPage === 1}
-                        onClick={() =>
-                            setCurrentPage(
-                                (prev) => prev - 1
-                            )
-                        }
-                        className="
-                            px-4
-                            h-10
-                            rounded-xl
-                            border
-                            bg-white
-                            disabled:opacity-40
-                            hover:bg-yellow-400
-                            hover:text-white
-                            transition
-                        "
-                    >
-                        <ChevronRight size={18} />
-                    </button>
+                    {/* Pagination Buttons */}
+                    <div className="flex justify-center items-center gap-2 flex-wrap">
 
-                    {getPageNumbers().map(
-                        (page, index) =>
+                        {/* Previous */}
+                        <button
+                            disabled={currentPage === 1}
+                            onClick={() =>
+                                setCurrentPage((prev) => prev - 1)
+                            }
+                            className="
+                    w-10
+                    h-10
+                    flex
+                    items-center
+                    justify-center
+                    rounded-xl
+                    border
+                    bg-white
+                    disabled:opacity-40
+                    hover:bg-yellow-400
+                    hover:text-white
+                    transition
+                "
+                        >
+                            <ChevronRight size={18} />
+                        </button>
+
+                        {/* Page Numbers */}
+                        {getPageNumbers().map((page, index) =>
                             page === "..." ? (
 
                                 <span
@@ -487,50 +519,109 @@ export default function ProductsPage() {
                                 <button
                                     key={index}
                                     onClick={() =>
-                                        setCurrentPage(
-                                            page
-                                        )
+                                        setCurrentPage(page)
                                     }
                                     className={`
-                                        w-10
-                                        h-10
-                                        rounded-xl
-                                        transition-all
-                                        ${currentPage === page
+                            w-10
+                            h-10
+                            rounded-xl
+                            transition-all
+                            ${currentPage === page
                                             ? "bg-yellow-400 text-white shadow-lg scale-105"
                                             : "bg-white border hover:bg-yellow-100"
                                         }
-                                    `}
+                        `}
                                 >
                                     {page}
                                 </button>
 
                             )
-                    )}
+                        )}
 
-                    <button
-                        disabled={
-                            currentPage === totalPages
-                        }
-                        onClick={() =>
-                            setCurrentPage(
-                                (prev) => prev + 1
-                            )
-                        }
-                        className="
-                            px-4
-                            h-10
-                            rounded-xl
-                            border
-                            bg-white
-                            disabled:opacity-40
-                            hover:bg-yellow-400
-                            hover:text-white
-                            transition
-                        "
-                    >
-                        <ChevronLeft size={18} />
-                    </button>
+                        {/* Next */}
+                        <button
+                            disabled={currentPage === totalPages}
+                            onClick={() =>
+                                setCurrentPage((prev) => prev + 1)
+                            }
+                            className="
+                    w-10
+                    h-10
+                    flex
+                    items-center
+                    justify-center
+                    rounded-xl
+                    border
+                    bg-white
+                    disabled:opacity-40
+                    hover:bg-yellow-400
+                    hover:text-white
+                    transition
+                "
+                        >
+                            <ChevronLeft size={18} />
+                        </button>
+
+                    </div>
+
+                    {/* Go To Page */}
+                    <div className="flex items-center gap-2">
+
+                        <span className="text-sm text-gray-600">
+                            برو به صفحه:
+                        </span>
+
+                        <input
+                            type="number"
+                            min="1"
+                            max={totalPages}
+                            value={pageInput}
+                            onChange={(e) =>
+                                setPageInput(e.target.value)
+                            }
+                            onKeyDown={handlePageInputKeyDown}
+                            placeholder={currentPage.toString()}
+                            className="
+                    w-20
+                    h-10
+                    px-3
+                    text-center
+                    rounded-xl
+                    border
+                    border-gray-300
+                    bg-white
+                    outline-none
+                    text-sm
+                    focus:border-yellow-400
+                    focus:ring-2
+                    focus:ring-yellow-100
+                    shadow-sm
+                "
+                        />
+
+                        <button
+                            type="button"
+                            onClick={goToPage}
+                            className="
+                    h-10
+                    px-4
+                    rounded-xl
+                    bg-yellow-400
+                    text-white
+                    font-semibold
+                    hover:bg-yellow-500
+                    transition
+                    shadow-sm
+                "
+                        >
+                            برو
+                        </button>
+
+                        <span className="text-sm text-gray-500">
+                            از {totalPages}
+                        </span>
+
+                    </div>
 
                 </div>
 

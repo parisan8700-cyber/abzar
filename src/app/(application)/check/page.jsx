@@ -110,9 +110,6 @@ export default function Check() {
                  <p className="text-md text-gray-700 mb-3 italic">
                     کد پستی : 9676149804
                 </p>
-                <p className="text-md text-gray-700">
-                    توجه : برای خرید اقساطی، لازم است مبلغ ۲۰۰٬۰۰۰ تومان به عنوان پیش‌پرداخت هنگام ثبت سفارش پرداخت شود.
-                </p>
             </motion.div>
 
 

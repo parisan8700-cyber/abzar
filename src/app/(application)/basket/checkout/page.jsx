@@ -330,10 +330,11 @@ export default function Checkout() {
                           <p className="text-sm text-gray-500">
                             هزینه ارسال در مقصد دریافت می‌شود
                           </p>
+                          
                         </div>
 
                         <div className="font-bold text-blue-600">
-                          100,000 تومان
+                          100,000 تومان به عنوان پیش پرداخت
                         </div>
                       </div>
 

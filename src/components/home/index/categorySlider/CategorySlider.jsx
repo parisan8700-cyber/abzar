@@ -9,8 +9,9 @@ import "swiper/css/navigation";
 
 const categories = [ { icon: "/img/12.png", title: "برقی", slug: "barghi" },
     { icon: "/img/16.png", title: "بادی", slug: "badi" },
-    { icon: "/img/18.png", title: "شارژی", slug: "sharji" },
+    { icon: "/img/18.png", title: "دریل شارژی", slug: "sharji/drill" },
     { icon: "/img/13.png", title: "جوش و برش", slug: "joosh-va-boresh" },
+    { icon: "/img/19.png", title: "کارواش", slug: "karvash" },
     { icon: "/img/17.png", title: "دستی", slug: "abzar-dasti" },
     { icon: "/img/15.png", title: "جرثقیل و لیفتینگ", slug: "jeraghil-lifting" },
     { icon: "/img/14.png", title: "گاراژی", slug: "tamirgahi" }, ];
