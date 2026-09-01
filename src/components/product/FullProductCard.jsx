@@ -128,17 +128,32 @@ export default function FullProduct() {
 
 
   useEffect(() => {
-    if (!product || !product.categories) return;
+    if (
+      !product ||
+      !product.categories ||
+      product.categories.length === 0
+    ) {
+      return;
+    }
 
     const fetchRelated = async () => {
       try {
-        const response = await Fetch.get(`/api/products/category/${product.categories[0]}`);
+        const category = product.categories[0];
+
+        const response = await Fetch.get(
+          `/api/products/category/${category.slug}`
+        );
+
         if (response.status === 200) {
-          // محصول فعلی رو حذف می‌کنیم از لیست مرتبط‌ها (تا خودش نمایش داده نشه)
-          const filtered = response.data.filter((p) => p._id !== product._id);
+          const filtered = response.data.filter(
+            (p) => p._id !== product._id
+          );
+
           setRelatedProducts(filtered);
         }
-      } catch (error) { }
+      } catch (error) {
+        console.error("خطا در دریافت محصولات مرتبط:", error);
+      }
     };
 
     fetchRelated();

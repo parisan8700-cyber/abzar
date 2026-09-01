@@ -21,10 +21,15 @@ export default function ProductsPage() {
 
     // جستجو
     const [search, setSearch] = useState("");
+    const [searchLoading, setSearchLoading] = useState(false);
 
     const ITEMS_PER_PAGE = 10;
     const [currentPage, setCurrentPage] = useState(1);
     const [pageInput, setPageInput] = useState("");
+
+    const [editingCell, setEditingCell] = useState(null);
+    const [editValue, setEditValue] = useState("");
+    const [savingCell, setSavingCell] = useState(null);
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -42,32 +47,55 @@ export default function ProductsPage() {
     }, []);
 
     // فیلتر محصولات بر اساس جستجو
-    const filteredProducts = useMemo(() => {
-        const searchValue = search.trim().toLowerCase();
+    useEffect(() => {
+        const searchValue = search.trim();
 
+        // اگر سرچ خالی است، همه محصولات را بگیر
         if (!searchValue) {
-            return products;
+            const fetchProducts = async () => {
+                try {
+                    setLoading(true);
+
+                    const res = await Fetch.get("/api/products");
+
+                    setProducts(res.data);
+                    setCurrentPage(1);
+                } catch (err) {
+                    toast.error("خطا در دریافت محصولات");
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            fetchProducts();
+
+            return;
         }
 
-        return products.filter((product) => {
-            const productName = product.name?.toLowerCase() || "";
+        // سرچ با debounce
+        const timeout = setTimeout(async () => {
+            try {
+                setSearchLoading(true);
 
-            const categories =
-                product.categories
-                    ?.map((cat) =>
-                        cat.parent
-                            ? cat.parent.name
-                            : cat.name
-                    )
-                    .join(" ")
-                    .toLowerCase() || "";
+                const res = await Fetch.get(
+                    `/api/products/search?q=${encodeURIComponent(searchValue)}`
+                );
 
-            return (
-                productName.includes(searchValue) ||
-                categories.includes(searchValue)
-            );
-        });
-    }, [products, search]);
+                setProducts(res.data);
+                setCurrentPage(1);
+            } catch (err) {
+                console.error(err);
+
+                setProducts([]);
+
+                toast.error("خطا در جستجوی محصولات");
+            } finally {
+                setSearchLoading(false);
+            }
+        }, 400);
+
+        return () => clearTimeout(timeout);
+    }, [search]);
 
     // وقتی عبارت جستجو تغییر کرد، برگرد به صفحه اول
     useEffect(() => {
@@ -76,7 +104,7 @@ export default function ProductsPage() {
 
     // تعداد صفحات بر اساس نتایج فیلترشده
     const totalPages = Math.ceil(
-        filteredProducts.length / ITEMS_PER_PAGE
+        products.length / ITEMS_PER_PAGE
     );
 
     // محصولات صفحه فعلی
@@ -84,11 +112,106 @@ export default function ProductsPage() {
         const start =
             (currentPage - 1) * ITEMS_PER_PAGE;
 
-        return filteredProducts.slice(
+        return products.slice(
             start,
             start + ITEMS_PER_PAGE
         );
-    }, [filteredProducts, currentPage]);
+    }, [products, currentPage]);
+
+    const startEditing = (productId, field, value) => {
+        setEditingCell({
+            productId,
+            field,
+        });
+
+        setEditValue(value ?? "");
+    };
+
+    const cancelEditing = () => {
+        setEditingCell(null);
+        setEditValue("");
+    };
+
+
+    const saveEditing = async () => {
+        if (!editingCell) return;
+
+        const { productId, field } = editingCell;
+
+        const value = Number(editValue);
+
+        // بررسی مقدار
+        if (editValue === "" || isNaN(value)) {
+            toast.error("لطفاً یک مقدار معتبر وارد کنید");
+            return;
+        }
+
+        if (value < 0) {
+            toast.error(
+                field === "price"
+                    ? "قیمت نمی‌تواند منفی باشد"
+                    : "موجودی نمی‌تواند منفی باشد"
+            );
+            return;
+        }
+
+        // برای موجودی عدد صحیح باشد
+        if (field === "stock" && !Number.isInteger(value)) {
+            toast.error("موجودی باید عدد صحیح باشد");
+            return;
+        }
+
+        setSavingCell(`${productId}-${field}`);
+
+        try {
+            const res = await Fetch.put(
+                `/api/products/${productId}`,
+                {
+                    [field]: value,
+                },
+                { token: true }
+            );
+
+            const updatedProduct = res.data.product;
+
+            setProducts((prev) =>
+                prev.map((product) =>
+                    product._id === productId
+                        ? {
+                            ...product,
+                            [field]: updatedProduct[field],
+                        }
+                        : product
+                )
+            );
+
+            toast.success(
+                field === "price"
+                    ? "قیمت با موفقیت تغییر کرد"
+                    : "موجودی با موفقیت تغییر کرد"
+            );
+
+            cancelEditing();
+        } catch (error) {
+            toast.error(
+                field === "price"
+                    ? "خطا در تغییر قیمت"
+                    : "خطا در تغییر موجودی"
+            );
+        } finally {
+            setSavingCell(null);
+        }
+    };
+
+    const handleEditKeyDown = (e) => {
+        if (e.key === "Enter") {
+            saveEditing();
+        }
+
+        if (e.key === "Escape") {
+            cancelEditing();
+        }
+    };
 
     const openDeleteModal = (id) => {
         setDeleteId(id);
@@ -339,19 +462,275 @@ export default function ProductsPage() {
                                     </td>
 
                                     <td className="py-3 px-6 font-semibold">
-                                        {product.price?.toLocaleString()} تومان
+
+                                        {editingCell?.productId === product._id &&
+                                            editingCell?.field === "price" ? (
+
+                                            <div className="flex items-center gap-2">
+
+                                                <input
+                                                    type="number"
+                                                    value={editValue}
+                                                    onChange={(e) =>
+                                                        setEditValue(e.target.value)
+                                                    }
+                                                    onKeyDown={handleEditKeyDown}
+                                                    autoFocus
+                                                    min="0"
+                                                    disabled={
+                                                        savingCell ===
+                                                        `${product._id}-price`
+                                                    }
+                                                    className="
+                    w-32
+                    h-9
+                    px-3
+                    rounded-lg
+                    border
+                    border-yellow-400
+                    outline-none
+                    focus:ring-2
+                    focus:ring-yellow-100
+                    text-sm
+                "
+                                                />
+
+                                                <span className="text-gray-600">
+                                                    تومان
+                                                </span>
+
+                                                {savingCell ===
+                                                    `${product._id}-price` ? (
+
+                                                    <span className="text-yellow-500 text-sm">
+                                                        ...
+                                                    </span>
+
+                                                ) : (
+
+                                                    <div className="flex items-center gap-1">
+
+                                                        <button
+                                                            onClick={saveEditing}
+                                                            className="
+                            w-8
+                            h-8
+                            rounded-lg
+                            bg-green-100
+                            text-green-600
+                            hover:bg-green-200
+                            transition
+                        "
+                                                            title="ذخیره"
+                                                        >
+                                                            ✓
+                                                        </button>
+
+                                                        <button
+                                                            onClick={cancelEditing}
+                                                            className="
+                            w-8
+                            h-8
+                            rounded-lg
+                            bg-red-100
+                            text-red-600
+                            hover:bg-red-200
+                            transition
+                        "
+                                                            title="لغو"
+                                                        >
+                                                            ×
+                                                        </button>
+
+                                                    </div>
+
+                                                )}
+
+                                            </div>
+
+                                        ) : (
+
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    startEditing(
+                                                        product._id,
+                                                        "price",
+                                                        product.price
+                                                    )
+                                                }
+                                                className="
+                group
+                flex
+                items-center
+                gap-2
+                text-right
+                hover:text-yellow-600
+                transition
+            "
+                                            >
+
+                                                <span>
+                                                    {product.price?.toLocaleString("fa-IR")} تومان
+                                                </span>
+
+                                                <span
+                                                    className="
+                    opacity-0
+                    group-hover:opacity-100
+                    text-xs
+                    text-yellow-500
+                    transition
+                "
+                                                >
+                                                    ✎
+                                                </span>
+
+                                            </button>
+
+                                        )}
+
                                     </td>
 
                                     <td className="py-3 px-6">
-                                        {product.stock <= 0 ? (
-                                            <span className="text-red-600 font-bold">
-                                                اتمام موجودی
-                                            </span>
+
+                                        {editingCell?.productId === product._id &&
+                                            editingCell?.field === "stock" ? (
+
+                                            <div className="flex items-center gap-2">
+
+                                                <input
+                                                    type="number"
+                                                    value={editValue}
+                                                    onChange={(e) =>
+                                                        setEditValue(e.target.value)
+                                                    }
+                                                    onKeyDown={handleEditKeyDown}
+                                                    autoFocus
+                                                    min="0"
+                                                    step="1"
+                                                    disabled={
+                                                        savingCell ===
+                                                        `${product._id}-stock`
+                                                    }
+                                                    className="
+                    w-24
+                    h-9
+                    px-3
+                    rounded-lg
+                    border
+                    border-yellow-400
+                    outline-none
+                    focus:ring-2
+                    focus:ring-yellow-100
+                    text-sm
+                "
+                                                />
+
+                                                <span className="text-gray-600">
+                                                    عدد
+                                                </span>
+
+                                                {savingCell ===
+                                                    `${product._id}-stock` ? (
+
+                                                    <span className="text-yellow-500 text-sm">
+                                                        ...
+                                                    </span>
+
+                                                ) : (
+
+                                                    <div className="flex items-center gap-1">
+
+                                                        <button
+                                                            onClick={saveEditing}
+                                                            className="
+                            w-8
+                            h-8
+                            rounded-lg
+                            bg-green-100
+                            text-green-600
+                            hover:bg-green-200
+                            transition
+                        "
+                                                            title="ذخیره"
+                                                        >
+                                                            ✓
+                                                        </button>
+
+                                                        <button
+                                                            onClick={cancelEditing}
+                                                            className="
+                            w-8
+                            h-8
+                            rounded-lg
+                            bg-red-100
+                            text-red-600
+                            hover:bg-red-200
+                            transition
+                        "
+                                                            title="لغو"
+                                                        >
+                                                            ×
+                                                        </button>
+
+                                                    </div>
+
+                                                )}
+
+                                            </div>
+
                                         ) : (
-                                            <span className="text-green-600 font-bold">
-                                                {product.stock.toLocaleString("fa-IR")} عدد
-                                            </span>
+
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    startEditing(
+                                                        product._id,
+                                                        "stock",
+                                                        product.stock
+                                                    )
+                                                }
+                                                className="
+                group
+                flex
+                items-center
+                gap-2
+                text-right
+                transition
+            "
+                                            >
+
+                                                {product.stock <= 0 ? (
+
+                                                    <span className="text-red-600 font-bold">
+                                                        اتمام موجودی
+                                                    </span>
+
+                                                ) : (
+
+                                                    <span className="text-green-600 font-bold">
+                                                        {product.stock.toLocaleString("fa-IR")} عدد
+                                                    </span>
+
+                                                )}
+
+                                                <span
+                                                    className="
+                    opacity-0
+                    group-hover:opacity-100
+                    text-xs
+                    text-yellow-500
+                    transition
+                "
+                                                >
+                                                    ✎
+                                                </span>
+
+                                            </button>
+
                                         )}
+
                                     </td>
 
                                     <td className="py-3 px-6">

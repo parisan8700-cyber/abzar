@@ -31,7 +31,7 @@ export default function Checkout() {
 
   const shippingCost =
     shippingMethod === "pickup"
-      ? 0
+      ? 100000
       : shippingMethod === "post"
         ? 100000
         : 200000;
@@ -287,7 +287,7 @@ export default function Checkout() {
                       🚚 روش ارسال
                     </h3>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
                       {/* تحویل حضوری */}
                       <div
@@ -309,7 +309,7 @@ export default function Checkout() {
                         </div>
 
                         <div className="font-bold text-green-600">
-                          رایگان
+                          100,000 تومان به عنوان پیش پرداخت
                         </div>
                       </div>
 
@@ -330,7 +330,7 @@ export default function Checkout() {
                           <p className="text-sm text-gray-500">
                             هزینه ارسال در مقصد دریافت می‌شود
                           </p>
-                          
+
                         </div>
 
                         <div className="font-bold text-blue-600">
@@ -343,49 +343,49 @@ export default function Checkout() {
 
                 </div>
 
-              {/* SUMMARY */}
-              <div className="bg-white rounded-2xl p-5 border mt-6 space-y-3">
+                {/* SUMMARY */}
+                <div className="bg-white rounded-2xl p-5 border mt-6 space-y-3">
 
-                <div className="flex justify-between text-gray-600">
-                  <span>هزینه ارسال</span>
-                  <span>{shippingCost.toLocaleString()} تومان</span>
-                </div>
+                  <div className="flex justify-between text-gray-600">
+                    <span>هزینه ارسال</span>
+                    <span>{shippingCost.toLocaleString()} تومان</span>
+                  </div>
 
-                <div className="flex justify-between text-base font-bold text-gray-900 border-t pt-3">
-                  <span>مبلغ قابل پرداخت</span>
-                  <span className="text-green-600">
-                    {finalAmount.toLocaleString()} تومان
-                  </span>
+                  <div className="flex justify-between text-base font-bold text-gray-900 border-t pt-3">
+                    <span>مبلغ قابل پرداخت</span>
+                    <span className="text-green-600">
+                      {finalAmount.toLocaleString()} تومان
+                    </span>
+                  </div>
+
                 </div>
 
               </div>
 
+              {/* SUBMIT */}
+              <button
+                type="submit"
+                className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-bold p-4 rounded-2xl hover:scale-[1.01] transition"
+              >
+                ثبت سفارش
+              </button>
+
+            </form>
+
           </div>
-
-          {/* SUBMIT */}
-          <button
-            type="submit"
-            className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-bold p-4 rounded-2xl hover:scale-[1.01] transition"
-          >
-            ثبت سفارش
-          </button>
-
-        </form>
-
-      </div>
-    </div>
+        </div>
       </div >
 
-    {/* BACK BUTTON */ }
-    < div className = "mt-6 text-center" >
-      <Link href="/basket">
-        <button
-          type="button"
-          className="border border-gray-300 hover:bg-gray-200 transition px-6 py-3 rounded-xl"
-        >
-          بازگشت
-        </button>
-      </Link>
+      {/* BACK BUTTON */}
+      < div className="mt-6 text-center" >
+        <Link href="/basket">
+          <button
+            type="button"
+            className="border border-gray-300 hover:bg-gray-200 transition px-6 py-3 rounded-xl"
+          >
+            بازگشت
+          </button>
+        </Link>
       </div >
 
     </div >

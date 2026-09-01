@@ -95,7 +95,7 @@ export default function StatsCard({
                             {title}
                         </p>
 
-                        <h2 className="mt-3 text-4xl font-black tracking-tight">
+                        <h2 className="mt-3 text-2xl font-black tracking-tight">
                             <span
                                 style={{
                                     background: `linear-gradient(90deg, ${color}, #111827)`,

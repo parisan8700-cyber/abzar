@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 import {
     User,
     Phone,
@@ -11,9 +13,39 @@ import {
     CreditCard,
     Mail,
     Mailbox,
+    Trash2,
 } from "lucide-react";
 
-export default function OrderCard({ order }) {
+import toast from "react-hot-toast";
+
+import Fetch from "@/utils/Fetch";
+
+export default function OrderCard({ order, onDelete }) {
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [deleting, setDeleting] = useState(false);
+
+    const handleDelete = async () => {
+        try {
+            setDeleting(true);
+
+            await Fetch.delete(`/api/orders/${order._id}`, {
+                token: true,
+            });
+
+            toast.success("سفارش با موفقیت حذف شد");
+
+            setShowDeleteModal(false);
+
+            if (onDelete) {
+                onDelete(order._id);
+            }
+
+        } catch (error) {
+            toast.error("خطا در حذف سفارش");
+        } finally {
+            setDeleting(false);
+        }
+    };
 
     const statusStyle = {
         pending: "bg-yellow-100 text-yellow-700",
@@ -187,17 +219,28 @@ export default function OrderCard({ order }) {
                                 </div>
 
                                 <div className="text-left">
+                                    {item.purchaseType === "installment" ? (
+                                        <div>
+                                            <p className="text-xs text-gray-500">
+                                                قیمت محصول
+                                            </p>
 
-                                    <p className="font-bold text-yellow-500">
+                                            <p className="font-bold text-gray-700">
+                                                {item.originalPrice?.toLocaleString("fa-IR")}
+                                            </p>
 
-                                        {item.price?.toLocaleString()} تومان
+                                            <p className="text-xs text-gray-500 mt-4">
+                                                پیش پرداخت
+                                            </p>
 
-                                    </p>
-
-                                    {item.purchaseType === "installment" && (
-                                        <span className="text-xs text-blue-600">
-                                            پیش پرداخت
-                                        </span>
+                                            <p className="font-bold text-yellow-500">
+                                                {item.price?.toLocaleString("fa-IR")} تومان
+                                            </p>
+                                        </div>
+                                    ) : (
+                                        <p className="font-bold text-yellow-500">
+                                            {item.price?.toLocaleString("fa-IR")} تومان
+                                        </p>
                                     )}
 
                                 </div>
@@ -244,6 +287,98 @@ export default function OrderCard({ order }) {
 
             </div>
 
+
+
+
+            <div className="border-t pt-4 mt-5">
+                <button
+                    onClick={() => setShowDeleteModal(true)}
+                    className="
+            w-full
+            flex
+            items-center
+            justify-center
+            gap-2
+            py-2.5
+            rounded-xl
+            bg-red-50
+            text-red-600
+            font-semibold
+            hover:bg-red-100
+            transition
+        "
+                >
+                    <Trash2 size={17} />
+                    حذف سفارش
+                </button>
+            </div>
+
+            {showDeleteModal && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30">
+
+                    <div className="bg-white rounded-2xl p-7 w-[350px] max-w-[calc(100%-2rem)] shadow-2xl text-center">
+
+                        <div className="flex justify-center mb-4">
+                            <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center">
+                                <Trash2
+                                    size={22}
+                                    className="text-red-600"
+                                />
+                            </div>
+                        </div>
+
+                        <h3 className="text-lg font-bold text-gray-900">
+                            حذف سفارش
+                        </h3>
+
+                        <p className="text-sm text-gray-500 mt-2 mb-6">
+                            آیا از حذف این سفارش مطمئن هستید؟
+                        </p>
+
+                        <div className="flex gap-3">
+
+                            <button
+                                onClick={handleDelete}
+                                disabled={deleting}
+                                className="
+                        flex-1
+                        py-2.5
+                        rounded-xl
+                        bg-red-600
+                        text-white
+                        font-semibold
+                        hover:bg-red-700
+                        disabled:opacity-50
+                        transition
+                    "
+                            >
+                                {deleting ? "در حال حذف..." : "حذف"}
+                            </button>
+
+                            <button
+                                onClick={() => setShowDeleteModal(false)}
+                                disabled={deleting}
+                                className="
+                        flex-1
+                        py-2.5
+                        rounded-xl
+                        bg-gray-100
+                        text-gray-700
+                        font-semibold
+                        hover:bg-gray-200
+                        disabled:opacity-50
+                        transition
+                    "
+                            >
+                                انصراف
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            )}
         </div>
     );
 }

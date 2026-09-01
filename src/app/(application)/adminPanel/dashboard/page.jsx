@@ -11,10 +11,7 @@ import {
 
 import MiniLoading from "@/components/shared/loading/MiniLoading";
 import Fetch from "@/utils/Fetch";
-import RecentOrders from "@/components/adminDashboard/RecentOrders";
-import OrdersChart from "@/components/adminDashboard/OrdersChart";
 import TopProducts from "@/components/adminDashboard/TopProducts";
-import RevenueChart from "@/components/adminDashboard/RevenueChart";
 import StatsCard from "@/components/adminDashboard/StatsCard";
 
 
@@ -57,8 +54,6 @@ export default function AdminDashboard() {
     if (loading || !stats) {
         return <MiniLoading />;
     }
-
-    console.log("stats", stats.topProducts)
 
     return (
 
@@ -147,36 +142,9 @@ export default function AdminDashboard() {
                 />
             </div>
 
-            {/* نمودارها */}
-
-            <div
-                className="
-                grid
-                grid-cols-1
-                xl:grid-cols-3
-                gap-6
-                "
-            >
-
-                <div className="xl:col-span-2">
-
-                    <RevenueChart
-                        data={stats.monthlyRevenue}
-                    />
-
-                </div>
-
-                <TopProducts
-                    products={stats.topProducts}
-                />
-
+            <div className="mt-10">
+                <TopProducts products={stats.topProducts} />
             </div>
-
-            {/* نمودار سفارش */}
-
-            <OrdersChart
-                data={stats.monthlyOrders}
-            />
 
         </div>
 

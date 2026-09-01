@@ -17,7 +17,7 @@ export default function OrdersFilters({
     setDate,
 }) {
     return (
-        <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow-lg border border-gray-200 dark:border-zinc-800 p-5 mb-8">
+        <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-5 mb-8">
 
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
 
@@ -34,7 +34,7 @@ export default function OrdersFilters({
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                         placeholder="جستجوی نام، شماره سفارش..."
-                        className="w-full pr-10 h-11 rounded-xl border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 outline-none px-3"
+                        className="w-full pr-10 h-11 rounded-xl border border-gray-300 bg-white outline-none px-3"
                     />
 
                 </div>
@@ -44,7 +44,7 @@ export default function OrdersFilters({
                 <select
                     value={status}
                     onChange={(e) => setStatus(e.target.value)}
-                    className="h-11 rounded-xl border border-gray-300 dark:border-zinc-700 px-3 bg-white dark:bg-zinc-950"
+                    className="h-11 rounded-xl border border-gray-300 px-3 bg-white"
                 >
                     <option value="all">همه وضعیت‌ها</option>
 
@@ -63,7 +63,7 @@ export default function OrdersFilters({
                 <select
                     value={paymentType}
                     onChange={(e) => setPaymentType(e.target.value)}
-                    className="h-11 rounded-xl border border-gray-300 dark:border-zinc-700 px-3 bg-white dark:bg-zinc-950"
+                    className="h-11 rounded-xl border border-gray-300 px-3 bg-white"
                 >
                     <option value="all">
                         همه سفارشات
@@ -87,7 +87,7 @@ export default function OrdersFilters({
                     calendar={persian}
                     locale={persian_fa}
                     calendarPosition="bottom-right"
-                    inputClass="w-full h-11 rounded-xl border border-gray-300 dark:border-zinc-700 px-3 bg-white dark:bg-zinc-950 outline-none"
+                    inputClass="w-full h-11 rounded-xl border border-gray-300 px-3 bg-white outline-none"
                     placeholder="فیلتر تاریخ"
                     format="YYYY/MM/DD"
                 />

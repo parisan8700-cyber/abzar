@@ -97,6 +97,12 @@ export default function AdminOrdersPage() {
         return filteredOrders.slice(start, start + ITEMS_PER_PAGE);
     }, [filteredOrders, currentPage]);
 
+    const handleDeleteOrder = (orderId) => {
+        setOrders((prev) =>
+            prev.filter((order) => order._id !== orderId)
+        );
+    };
+
     if (loading) return <MiniLoading />;
 
     return (
@@ -132,6 +138,7 @@ export default function AdminOrdersPage() {
                             <OrderCard
                                 key={order._id}
                                 order={order}
+                                onDelete={handleDeleteOrder}
                             />
                         ))}
                     </div>

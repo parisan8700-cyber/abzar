@@ -133,7 +133,7 @@ transition-all duration-500 ease-out group-hover:opacity-100 group-hover:scale-1
               <ShoppingCart color="black" />
             </button>
 
-            <p className="font-bold text-yellow-300 text-base flex items-center">
+            <p className="font-bold text-gray-900 text-base flex items-center gap-1 bg-yellow-300 px-3 py-1.5 rounded-lg">
               {toPersianDigits(
                 formatPrice(
                   product.discount > 0
