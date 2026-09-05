@@ -2,6 +2,7 @@ import NavigationBar from "@/components/shared/navigation/NavigationBar";
 import "./globals.css";
 import localFont from "next/font/local";
 import { Toaster } from "react-hot-toast";
+import InstallmentFloatingButton from "@/components/ui/InstallmentFloatingButton";
 
 const kalameh = localFont({
   src: [
@@ -147,6 +148,7 @@ export default function RootLayout({ children }) {
       <body className={`antialiased`} suppressHydrationWarning>
         {children}
         <Toaster position="bottom-center" />
+        <InstallmentFloatingButton />
         <NavigationBar />
       </body>
     </html>

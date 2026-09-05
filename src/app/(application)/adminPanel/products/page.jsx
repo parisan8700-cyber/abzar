@@ -850,7 +850,6 @@ export default function ProductsPage() {
             )}
 
             {/* Pagination */}
-            {/* Pagination */}
             {totalPages > 1 && (
 
                 <div className="mt-8 flex flex-col items-center gap-5">

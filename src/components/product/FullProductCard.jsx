@@ -17,6 +17,8 @@ import Breadcrumb from "../ui/Breadcrumb";
 import Link from "next/link";
 import Loading from "../shared/loading/Loading";
 
+const MAX_CART_VALUE = 100000000;
+
 export default function FullProduct() {
   const [product, setProduct] = useState();
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
@@ -43,6 +45,36 @@ export default function FullProduct() {
 
   const addToCart = async () => {
     try {
+      // بررسی سقف ۱۰۰ میلیون تومان سبد خرید
+      const cartRes = await fetch(
+        "https://abzarkashmar.ir/api/cart",
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (cartRes.ok) {
+        const cartData = await cartRes.json();
+
+        const currentCartValue =
+          cartData?.items?.reduce((sum, item) => {
+            return sum + (item.product?.price || 0) * item.quantity;
+          }, 0) || 0;
+
+        const newCartValue =
+          currentCartValue + (product?.price || 0);
+
+        if (newCartValue > MAX_CART_VALUE) {
+          toast.error(
+            "مجموع ارزش سبد خرید نمی‌تواند بیشتر از ۱۰۰ میلیون تومان باشد"
+          );
+          return;
+        }
+      }
+
+
       // دریافت یا ایجاد guestId برای مهمان
       let guestId = localStorage.getItem("guestId");
       if (!guestId) {
@@ -86,6 +118,36 @@ export default function FullProduct() {
 
   const addToCartInstallment = async () => {
     try {
+      // بررسی سقف ۱۰۰ میلیون تومان سبد خرید
+      const cartRes = await fetch(
+        "https://abzarkashmar.ir/api/cart",
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (cartRes.ok) {
+        const cartData = await cartRes.json();
+
+        const currentCartValue =
+          cartData?.items?.reduce((sum, item) => {
+            return sum + (item.product?.price || 0) * item.quantity;
+          }, 0) || 0;
+
+        const newCartValue =
+          currentCartValue + (product?.price || 0);
+
+        if (newCartValue > MAX_CART_VALUE) {
+          toast.error(
+            "مجموع ارزش سبد خرید نمی‌تواند بیشتر از ۱۰۰ میلیون تومان باشد"
+          );
+          return;
+        }
+      }
+
+
       // دریافت یا ایجاد guestId برای مهمان
       let guestId = localStorage.getItem("guestId");
       if (!guestId) {
@@ -246,8 +308,11 @@ export default function FullProduct() {
               <>
                 <div className="flex items-center justify-between mb-2 mt-10">
                   {product.discount > 0 && (
-                    <del className="text-gray-400 text-sm">{formatPrice(product.price)} تومان</del>
+                    <del className="text-gray-400 text-sm">
+                      {formatPrice(product.price)} تومان
+                    </del>
                   )}
+
                   {product.discount > 0 && (
                     <span className="bg-yellow-400 text-white text-xs px-2 py-0.5 rounded">
                       {getDiscountPercent(product.price, product.discount)}٪ تخفیف
@@ -255,8 +320,10 @@ export default function FullProduct() {
                   )}
                 </div>
 
-                <div className="text-xl md:text-2xl font-bold text-black mb-4">
-                  {formatPrice(getFinalPrice(product.price, product.discount))} تومان
+                <div className="text-xl md:text-2xl font-bold text-black mb-3">
+                  {formatPrice(
+                    getFinalPrice(product.price, product.discount)
+                  )} تومان
                 </div>
 
                 {/* موجودی محصول */}
@@ -269,16 +336,21 @@ export default function FullProduct() {
                   ) : (
                     <div className="inline-flex items-center gap-2 bg-green-50 border border-green-200 text-green-700 px-4 py-2 rounded-xl text-sm">
                       <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+
                       موجودی:
+
                       <span className="font-bold">
                         {product.stock.toLocaleString("fa-IR")}
                       </span>
+
                       عدد
                     </div>
                   )}
                 </div>
+
               </>
             )}
+
 
             <div className="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4 mt-5">
               {/* دکمه‌های خرید */}
@@ -330,9 +402,82 @@ export default function FullProduct() {
 
               {/* لینک شرایط */}
               <div className="order-1 sm:order-2 max-sm:mb-3">
-                <Link href="/check">
-                  <button className="text-sm text-white bg-green-600 hover:bg-green-800 px-3 py-2 rounded-2xl">
-                    مشاهده شرایط اقساطی
+                <Link href="/check" className="group relative block">
+
+                  {/* Glow پشت دکمه */}
+                  <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-emerald-400 via-green-500 to-emerald-400 opacity-30 blur-md transition-all duration-500 group-hover:opacity-60 group-hover:blur-lg" />
+
+                  {/* دکمه */}
+                  <button
+                    className="
+        relative flex items-center justify-center gap-2
+        overflow-hidden
+        rounded-2xl
+        border border-emerald-400/40
+        bg-gradient-to-l from-emerald-600 via-green-600 to-emerald-500
+        px-4 py-2.5
+        text-[12px] font-extrabold text-white
+        shadow-[0_8px_25px_-8px_rgba(16,185,129,0.7)]
+        transition-all duration-300
+        hover:-translate-y-0.5
+        hover:scale-[1.03]
+        hover:shadow-[0_12px_30px_-6px_rgba(16,185,129,0.85)]
+        active:scale-95
+      "
+                  >
+
+                    {/* شاین متحرک */}
+                    <span
+                      className="
+          pointer-events-none
+          absolute inset-0
+          -translate-x-full
+          bg-gradient-to-r
+          from-transparent
+          via-white/30
+          to-transparent
+          skew-x-[-20deg]
+          transition-transform
+          duration-700
+          group-hover:translate-x-full
+        "
+                    />
+
+                    {/* آیکون */}
+                    <span
+                      className="
+          relative z-10
+          flex h-6 w-6 items-center justify-center
+          rounded-lg
+          bg-white/15
+          text-sm
+          backdrop-blur-sm
+          transition-transform
+          duration-300
+          group-hover:rotate-[-8deg]
+          group-hover:scale-110
+        "
+                    >
+                      💳
+                    </span>
+
+                    {/* متن */}
+                    <span className="relative z-10 whitespace-nowrap">
+                      مشاهده شرایط اقساطی
+                    </span>
+
+                    {/* فلش */}
+                    <span
+                      className="
+          relative z-10
+          text-base leading-none
+          transition-transform duration-300
+          group-hover:-translate-x-1
+        "
+                    >
+                      ←
+                    </span>
+
                   </button>
                 </Link>
               </div>
@@ -345,7 +490,7 @@ export default function FullProduct() {
         <h2 className="text-xl font-bold text-black mb-4">
           توضیحات کامل محصول
         </h2>
-        <p className="text-gray-700 leading-relaxed text-md">
+        <p className="text-gray-700 leading-8 text-md whitespace-pre-line">
           {product?.description ||
             "توضیحات تکمیلی این محصول هنوز اضافه نشده است"}
         </p>

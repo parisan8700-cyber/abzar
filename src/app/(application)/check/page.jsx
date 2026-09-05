@@ -86,7 +86,22 @@ export default function Check() {
                 </motion.div>
             </div>
 
-            {/* شرایط اقساط */} <motion.div className="bg-gradient-to-r from-yellow-50 to-white rounded-2xl shadow-lg p-6 border border-yellow-300 mt-6" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} > <h2 className="text-2xl font-bold text-center text-yellow-600 mb-2"> 🎉 شرایط اقساط تمامی محصولات </h2> <p className="text-center text-lg font-semibold text-green-600 mb-6"> ۶ ماهه بدون پیش‌پرداخت و بدون سود 🤩 </p> <div className="space-y-3"> {["برای مبالغ زیر ۱۰ میلیون: یک برگ چک ۴ ماهه", "برای مبالغ زیر ۲۰ میلیون: ۲ برگ چک، هر ۳ ماه یک چک", "برای مبالغ زیر ۳۰ میلیون: ۳ برگ چک، هر ۲ ماه یک چک", "برای مبالغ زیر ۵۰ میلیون: ۴ برگ چک، هر ۴۵ روز یک چک", "برای مبالغ زیر ۸۰ میلیون: ۶ برگ چک، ماه به ماه",].map((item, index) => (<motion.div key={index} whileHover={{ scale: 1.02 }} className="flex items-center gap-3 bg-white border border-gray-200 rounded-xl p-4 shadow-sm" > <span className="text-green-500 text-xl">✅</span> <span className="text-gray-700">{item}</span> </motion.div>))} </div> </motion.div>
+            {/* شرایط اقساط */}
+            <motion.div className="bg-gradient-to-r from-yellow-50 to-white rounded-2xl shadow-lg p-6 border border-yellow-300 mt-6" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} >
+                <h2 className="text-2xl font-bold text-center text-yellow-600 mb-2">
+                    🎉 شرایط اقساط تمامی محصولات </h2>
+                <div className="space-y-3">
+                    {["برای مبالغ زیر ۱۰ میلیون: یک برگ چک ۳ ماهه",
+                        "برای مبالغ زیر ۳۰ میلیون: ۲ برگ چک، ۲ ماه به ۲ ماه",
+                        "برای مبالغ زیر ۶۰ میلیون: ۴ برگ چک، ماه به ماه",
+                    ].map((item, index) =>
+                    (<motion.div key={index} whileHover={{ scale: 1.02 }} className="flex items-center gap-3 bg-white border border-gray-200 rounded-xl p-4 shadow-sm" >
+                        <span className="text-green-500 text-xl">✅</span> <span className="text-gray-700">
+                            {item}
+                        </span>
+                    </motion.div>))}
+                </div>
+            </motion.div>
 
             {/* شرایط چک */}
             <motion.div
@@ -107,7 +122,7 @@ export default function Check() {
                 <p className="text-md text-gray-700 mb-3 italic">
                     آدرس: خراسان رضوی ، کاشمر، بلوار فروتقه، بعد از امام‌رضا(ع)15
                 </p>
-                 <p className="text-md text-gray-700 mb-3 italic">
+                <p className="text-md text-gray-700 mb-3 italic">
                     کد پستی : 9676149804
                 </p>
             </motion.div>
