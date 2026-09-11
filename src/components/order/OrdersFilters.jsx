@@ -56,6 +56,10 @@ export default function OrdersFilters({
                         پرداخت شده
                     </option>
 
+                    <option value="shipped">
+                        ارسال شده
+                    </option>
+
                 </select>
 
                 {/* نوع خرید */}

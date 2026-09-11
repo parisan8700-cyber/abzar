@@ -14,15 +14,17 @@ import {
     Mail,
     Mailbox,
     Trash2,
+    Truck,
 } from "lucide-react";
 
 import toast from "react-hot-toast";
 
 import Fetch from "@/utils/Fetch";
 
-export default function OrderCard({ order, onDelete }) {
+export default function OrderCard({ order, onDelete, onStatusChange }) {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [deleting, setDeleting] = useState(false);
+    const [updatingStatus, setUpdatingStatus] = useState(false);
 
     const handleDelete = async () => {
         try {
@@ -44,6 +46,35 @@ export default function OrderCard({ order, onDelete }) {
             toast.error("خطا در حذف سفارش");
         } finally {
             setDeleting(false);
+        }
+    };
+
+
+    const handleMarkAsShipped = async () => {
+        try {
+            setUpdatingStatus(true);
+
+            await Fetch.patch(
+                `/api/orders/${order._id}/status`,
+                {
+                    status: "shipped",
+                },
+                {
+                    token: true,
+                }
+            );
+
+            toast.success("سفارش به وضعیت ارسال شده تغییر کرد");
+
+            if (onStatusChange) {
+                onStatusChange(order._id, "shipped");
+            }
+
+        } catch (error) {
+            console.error(error);
+            toast.error("خطا در تغییر وضعیت سفارش");
+        } finally {
+            setUpdatingStatus(false);
         }
     };
 
@@ -73,12 +104,64 @@ export default function OrderCard({ order, onDelete }) {
 
     const date = new Date(order.createdAt);
 
+
+    const productsTotal = order.items.reduce((total, item) => {
+        return total + (item.originalPrice || 0) * item.quantity;
+    }, 0);
+
+
+    const cardStatusStyle = {
+        pending: {
+            border: "border-yellow-300",
+            header: "from-yellow-400 to-amber-500",
+            bg: "bg-yellow-50/30",
+        },
+        paid: {
+            border: "border-green-300",
+            header: "from-green-500 to-emerald-600",
+            bg: "bg-green-50/30",
+        },
+        shipped: {
+            border: "border-blue-300",
+            header: "from-blue-500 to-cyan-600",
+            bg: "bg-blue-50/30",
+        },
+        delivered: {
+            border: "border-purple-300",
+            header: "from-purple-500 to-violet-600",
+            bg: "bg-purple-50/30",
+        },
+    };
+
+    const currentStatusStyle =
+        cardStatusStyle[order.status] || cardStatusStyle.pending;
+
     return (
-        <div className="bg-white rounded-3xl border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden">
+        <div
+            className={`
+        ${currentStatusStyle.bg}
+        rounded-3xl
+        border-2
+        ${currentStatusStyle.border}
+        shadow-sm
+        hover:shadow-xl
+        transition-all
+        duration-300
+        overflow-hidden
+    `}
+        >
 
             {/* Header */}
 
-            <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 px-5 py-4 text-white">
+            <div
+                className={`
+        bg-gradient-to-r
+        ${currentStatusStyle.header}
+        px-5
+        py-4
+        text-white
+    `}
+            >
 
                 <div className="flex justify-between items-start">
 
@@ -112,20 +195,40 @@ export default function OrderCard({ order, onDelete }) {
                 <div className="flex justify-between items-center">
 
                     <span
-                        className={`px-3 py-1 rounded-full text-xs font-bold ${statusStyle[order.status]}`}
+                        className={`
+        px-3
+        py-1.5
+        rounded-full
+        text-xs
+        font-extrabold
+        shadow-sm
+        ${statusStyle[order.status]}
+    `}
                     >
                         {statusText[order.status]}
                     </span>
 
-                    <div className="text-right">
+                    <div className="text-right space-y-1">
 
-                        <p className="text-xs text-gray-500">
-                            مبلغ پرداختی
-                        </p>
+                        <div>
+                            <p className="text-xs text-gray-500">
+                                جمع قیمت واقعی محصولات
+                            </p>
 
-                        <p className="text-base font-extrabold text-yellow-500">
-                            {order.amount.toLocaleString()} تومان
-                        </p>
+                            <p className="text-base font-extrabold text-gray-700">
+                                {productsTotal.toLocaleString("fa-IR")} تومان
+                            </p>
+                        </div>
+
+                        <div className="pt-1">
+                            <p className="text-xs text-gray-500">
+                                مبلغ پرداختی
+                            </p>
+
+                            <p className="text-base font-extrabold text-yellow-500">
+                                {order.amount.toLocaleString("fa-IR")} تومان
+                            </p>
+                        </div>
 
                     </div>
 
@@ -290,7 +393,37 @@ export default function OrderCard({ order, onDelete }) {
 
 
 
-            <div className="border-t pt-4 mt-5">
+            <div className="border-t pt-4 mt-5 space-y-2">
+
+                {order.status === "paid" && (
+                    <button
+                        onClick={handleMarkAsShipped}
+                        disabled={updatingStatus}
+                        className="
+                w-full
+                flex
+                items-center
+                justify-center
+                gap-2
+                py-2.5
+                rounded-xl
+                bg-blue-50
+                text-blue-600
+                font-semibold
+                hover:bg-blue-100
+                disabled:opacity-50
+                disabled:cursor-not-allowed
+                transition
+            "
+                    >
+                        <Truck size={17} />
+
+                        {updatingStatus
+                            ? "در حال تغییر وضعیت..."
+                            : "علامت‌گذاری به‌عنوان ارسال شده"}
+                    </button>
+                )}
+
                 <button
                     onClick={() => setShowDeleteModal(true)}
                     className="
@@ -311,6 +444,7 @@ export default function OrderCard({ order, onDelete }) {
                     <Trash2 size={17} />
                     حذف سفارش
                 </button>
+
             </div>
 
             {showDeleteModal && (

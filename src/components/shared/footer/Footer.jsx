@@ -163,7 +163,7 @@ export default function Footer() {
 
           <div className="border-t border-gray-500 pt-3 text-sm grid gap-5">
             <p>تمام حقوق مادی و معنوی مطالب موجود در این سایت متعلق به مجموعه ابزار کاشمر می‌باشد.</p>
-            <a href="https://parisan0487.github.io" target="_blank">طراحی شده توسط : <span className="text-yellow-400 underline underline-offset-2">پریسان غلامی</span></a>
+            <a href="https://parisan0487.ir" target="_blank">طراحی شده توسط : <span className="text-yellow-400 underline underline-offset-2">پریسان غلامی</span></a>
           </div>
         </div>
       </div>
