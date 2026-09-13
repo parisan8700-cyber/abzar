@@ -219,6 +219,7 @@ export default function Basket() {
 
                           <p className="mt-2 text-xs text-slate-500 sm:text-sm">
                             تعداد: {item.quantity}
+                            {item.product?.unit === "متر" ? " متر" : " عدد"}
                           </p>
 
                         </div>

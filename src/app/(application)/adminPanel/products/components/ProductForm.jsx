@@ -12,7 +12,7 @@ export default function ProductForm({ initialData = {}, onSubmit }) {
         name: "",
         price: "",
         discount: "",
-        stock: "",
+        stock: "", unit: "عدد",
         description: "",
         brand: "",
         imagesInput: "",
@@ -92,6 +92,7 @@ export default function ProductForm({ initialData = {}, onSubmit }) {
                 price: initialData.price ? formatNumber(initialData.price) : "",
                 discount: initialData.discount ? formatNumber(initialData.discount) : "",
                 stock: initialData.stock ?? "",
+                unit: initialData.unit || "عدد",
                 description: initialData.description || "",
                 brand: initialData.brand || "",
                 images: initialData.images || [],
@@ -119,7 +120,7 @@ export default function ProductForm({ initialData = {}, onSubmit }) {
     };
 
 
-     const brands = ["ARVA", "KAT", "ZIMBERG","TOSAN", "HARDEX", "HARBOUR", "TANOS", "CROWN", "TOPEX", "STRONG","NEXTOL","TIVAN","TOPTUL", "TURBO","IVEK", "ARIEL","WORKPRO","AZD", "LEKA","ROKSER","HYUNDAI","DWT", "APN","NEC","NOVA","IRONMAX","FUJI TEX", "PM","NORS","محک",  "سایر"];
+    const brands = ["ARVA", "KAT", "ZIMBERG", "TOSAN", "HARDEX", "HARBOUR", "TANOS", "CROWN", "TOPEX", "STRONG", "NEXTOL", "TIVAN", "TOPTUL", "TURBO", "IVEK", "ARIEL", "WORKPRO", "AZD", "LEKA", "ROKSER", "HYUNDAI", "DWT", "APN", "NEC", "NOVA", "IRONMAX", "FUJI TEX", "PM", "NORS", "محک", "سایر"];
     const categoryIds = formData.categories.map(c => c.sub || c.main);
 
     const handleChange = (e) => {
@@ -249,15 +250,35 @@ export default function ProductForm({ initialData = {}, onSubmit }) {
             </div>
 
 
-            <div>
-                <label className="block mb-1 font-semibold text-yellow-400">موجودی انبار</label>
-                <input
-                    name="stock"
-                    type="number"
-                    value={formData.stock}
-                    onChange={handleChange}
-                    className="w-full border border-gray-300 bg-white px-4 py-2 rounded-lg shadow-sm"
-                />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label className="block mb-1 font-semibold text-yellow-400">
+                        موجودی انبار
+                    </label>
+                    <input
+                        name="stock"
+                        type="number"
+                        value={formData.stock}
+                        onChange={handleChange}
+                        className="w-full border border-gray-300 bg-white px-4 py-2 rounded-lg shadow-sm"
+                    />
+                </div>
+
+                <div>
+                    <label className="block mb-1 font-semibold text-yellow-400">
+                        واحد فروش
+                    </label>
+
+                    <select
+                        name="unit"
+                        value={formData.unit}
+                        onChange={handleChange}
+                        className="w-full border border-gray-300 bg-white px-4 py-2 rounded-lg shadow-sm"
+                    >
+                        <option value="عدد">عدد</option>
+                        <option value="متر">متر</option>
+                    </select>
+                </div>
             </div>
 
             <div>

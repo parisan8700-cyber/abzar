@@ -324,7 +324,9 @@ export default function FullProduct() {
                   {formatPrice(
                     getFinalPrice(product.price, product.discount)
                   )} تومان
+                  {product?.unit === "متر" && " / متر"}
                 </div>
+
 
                 {/* موجودی محصول */}
                 <div className="mb-5">
@@ -343,7 +345,7 @@ export default function FullProduct() {
                         {product.stock.toLocaleString("fa-IR")}
                       </span>
 
-                      عدد
+                      {product?.unit === "متر" ? " متر" : " عدد"}
                     </div>
                   )}
                 </div>

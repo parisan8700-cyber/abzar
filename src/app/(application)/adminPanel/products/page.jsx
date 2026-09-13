@@ -118,13 +118,40 @@ export default function ProductsPage() {
         );
     }, [products, currentPage]);
 
+
+    const toEnglishDigits = (value) => {
+        return String(value)
+            .replace(/[۰-۹]/g, (digit) =>
+                String("۰۱۲۳۴۵۶۷۸۹".indexOf(digit))
+            )
+            .replace(/[٠-٩]/g, (digit) =>
+                String("٠١٢٣٤٥٦٧٨٩".indexOf(digit))
+            );
+    };
+
+    const formatPriceInput = (value) => {
+        // تبدیل اعداد فارسی و عربی به انگلیسی
+        const normalizedValue = toEnglishDigits(value);
+
+        // فقط اعداد انگلیسی
+        const numericValue = normalizedValue.replace(/\D/g, "");
+
+        if (!numericValue) return "";
+
+        return Number(numericValue).toLocaleString("fa-IR");
+    };
+
     const startEditing = (productId, field, value) => {
         setEditingCell({
             productId,
             field,
         });
 
-        setEditValue(value ?? "");
+        if (field === "price") {
+            setEditValue(formatPriceInput(String(value ?? "")));
+        } else {
+            setEditValue(String(value ?? ""));
+        }
     };
 
     const cancelEditing = () => {
@@ -138,7 +165,9 @@ export default function ProductsPage() {
 
         const { productId, field } = editingCell;
 
-        const value = Number(editValue);
+        const normalizedValue = toEnglishDigits(editValue);
+        const rawValue = normalizedValue.replace(/\D/g, "");
+        const value = Number(rawValue);
 
         // بررسی مقدار
         if (editValue === "" || isNaN(value)) {
@@ -469,14 +498,14 @@ export default function ProductsPage() {
                                             <div className="flex items-center gap-2">
 
                                                 <input
-                                                    type="number"
+                                                    type="text"
+                                                    inputMode="numeric"
                                                     value={editValue}
                                                     onChange={(e) =>
-                                                        setEditValue(e.target.value)
+                                                        setEditValue(formatPriceInput(e.target.value))
                                                     }
                                                     onKeyDown={handleEditKeyDown}
                                                     autoFocus
-                                                    min="0"
                                                     disabled={
                                                         savingCell ===
                                                         `${product._id}-price`
@@ -628,7 +657,7 @@ export default function ProductsPage() {
                                                 />
 
                                                 <span className="text-gray-600">
-                                                    عدد
+                                                    {product?.unit === "متر" ? "متر" : "عدد"}
                                                 </span>
 
                                                 {savingCell ===
@@ -710,7 +739,8 @@ export default function ProductsPage() {
                                                 ) : (
 
                                                     <span className="text-green-600 font-bold">
-                                                        {product.stock.toLocaleString("fa-IR")} عدد
+                                                        {product.stock.toLocaleString("fa-IR")}
+                                                        {product?.unit === "متر" ? " متر" : " عدد"}
                                                     </span>
 
                                                 )}
