@@ -182,7 +182,7 @@ export default function Checkout() {
 
       const { _id: orderId, amount } = data;
 
-      useOrderStore.getState().setOrder(orderId, amount);
+      useOrderStore.getState().setOrder(orderId, amount, paymentType);
 
       router.push('/basket/payment');
     } catch (err) {

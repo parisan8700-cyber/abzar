@@ -113,6 +113,17 @@ export default function AdminOrdersPage() {
         );
     };
 
+
+    const handleOrderUpdate = (updatedOrder) => {
+        setOrders((prev) =>
+            prev.map((order) =>
+                order._id === updatedOrder._id
+                    ? updatedOrder
+                    : order
+            )
+        );
+    };
+
     if (loading) return <MiniLoading />;
 
     return (
@@ -150,6 +161,7 @@ export default function AdminOrdersPage() {
                                 order={order}
                                 onDelete={handleDeleteOrder}
                                 onStatusChange={handleStatusChange}
+                                onOrderUpdate={handleOrderUpdate}
                             />
                         ))}
                     </div>

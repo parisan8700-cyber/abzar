@@ -11,7 +11,7 @@ import toast from "react-hot-toast";
 
 export default function Payment() {
   const router = useRouter();
-  const { orderId, amount } = useOrderStore();
+  const { orderId, amount, paymentType } = useOrderStore();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -21,11 +21,35 @@ export default function Payment() {
   }, [orderId, amount]);
 
 
+
+  useEffect(() => {
+    if (orderId && paymentType === "installment") {
+      toast(
+        "توجه: چک‌های خرید اقساطی فقط تا ۴ روز پس از ثبت سفارش معتبر هستند. لطفاً حداکثر تا ۴ روز چک‌ها را ارسال کنید؛ پس از این مهلت، چک‌ها معتبر نخواهند بود.",
+        {
+          duration: 7000,
+          icon: "⚠️",
+          style: {
+            direction: "rtl",
+            textAlign: "right",
+            fontFamily: "inherit",
+            lineHeight: "1.8",
+            minWidth: "320px",
+            maxWidth: "420px",
+            padding: "14px 18px",
+            borderRadius: "14px",
+          },
+        }
+      );
+    }
+  }, [orderId, paymentType]);
+
+
   const handlePay = async () => {
     if (!amount) return;
 
     try {
-      
+
       const amountInRial = amount * 10;
 
       const { data } = await Fetch.post(
@@ -35,7 +59,7 @@ export default function Payment() {
           description: `پرداخت سفارش شماره ${orderId}`,
           orderId,
         },
-        { requiresAuth: false } 
+        { requiresAuth: false }
       );
 
       if (data.url) {
