@@ -657,7 +657,7 @@ export default function ProductsPage() {
                                                 />
 
                                                 <span className="text-gray-600">
-                                                    {product?.unit === "متر" ? "متر" : "عدد"}
+                                                    {product?.unit || "عدد"}
                                                 </span>
 
                                                 {savingCell ===
@@ -731,18 +731,14 @@ export default function ProductsPage() {
                                             >
 
                                                 {product.stock <= 0 ? (
-
                                                     <span className="text-red-600 font-bold">
                                                         اتمام موجودی
                                                     </span>
-
                                                 ) : (
-
                                                     <span className="text-green-600 font-bold">
-                                                        {product.stock.toLocaleString("fa-IR")}
-                                                        {product?.unit === "متر" ? " متر" : " عدد"}
+                                                        {product.stock.toLocaleString("fa-IR")}{" "}
+                                                        {product?.unit || "عدد"}
                                                     </span>
-
                                                 )}
 
                                                 <span

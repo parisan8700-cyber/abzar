@@ -1,5 +1,6 @@
 "use client";
 import Fetch from "@/utils/Fetch";
+import { PRODUCT_UNITS } from "@/utils/productUnits";
 import { useState, useEffect } from "react";
 
 export default function ProductForm({ initialData = {}, onSubmit }) {
@@ -120,7 +121,7 @@ export default function ProductForm({ initialData = {}, onSubmit }) {
     };
 
 
-    const brands = ["ARVA", "KAT", "ZIMBERG", "TOSAN", "HARDEX", "HARBOUR", "TANOS", "CROWN", "TOPEX", "STRONG", "NEXTOL", "TIVAN", "TOPTUL", "TURBO", "IVEK", "ARIEL", "WORKPRO", "AZD", "LEKA", "ROKSER", "HYUNDAI", "DWT", "APN", "NEC", "NOVA", "IRONMAX", "FUJI TEX", "PM", "NORS", "محک", "سایر"];
+    const brands = ["ARVA", "KAT", "ZIMBERG", "TOSAN", "HARDEX", "HARBOUR", "TANOS", "CROWN", "TOPEX", "STRONG", "NEXTOL", "TIVAN", "TOPTUL", "TURBO", "IVEK", "ARIEL", "WORKPRO", "AZD", "LEKA", "ROKSER", "HYUNDAI", "DWT", "APN", "NEC", "NOVA", "IRONMAX", "FUJI TEX", "PM", "NORS","PUKKA", "محک", "سایر"];
     const categoryIds = formData.categories.map(c => c.sub || c.main);
 
     const handleChange = (e) => {
@@ -275,8 +276,11 @@ export default function ProductForm({ initialData = {}, onSubmit }) {
                         onChange={handleChange}
                         className="w-full border border-gray-300 bg-white px-4 py-2 rounded-lg shadow-sm"
                     >
-                        <option value="عدد">عدد</option>
-                        <option value="متر">متر</option>
+                        {PRODUCT_UNITS.map((unit) => (
+                            <option key={unit} value={unit}>
+                                {unit}
+                            </option>
+                        ))}
                     </select>
                 </div>
             </div>

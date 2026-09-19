@@ -324,7 +324,6 @@ export default function FullProduct() {
                   {formatPrice(
                     getFinalPrice(product.price, product.discount)
                   )} تومان
-                  {product?.unit === "متر" && " / متر"}
                 </div>
 
 
@@ -345,7 +344,9 @@ export default function FullProduct() {
                         {product.stock.toLocaleString("fa-IR")}
                       </span>
 
-                      {product?.unit === "متر" ? " متر" : " عدد"}
+                      <span>
+                        {product?.unit || "عدد"}
+                      </span>
                     </div>
                   )}
                 </div>
