@@ -10,6 +10,7 @@ const menuItems = [
   { href: "/adminPanel/dashboard", label: "داشبورد آماری" },
   { href: "/adminPanel/users", label: "کاربران" },
   { href: "/adminPanel/products", label: "محصولات" },
+  { href: "/adminPanel/productViews", label: "آمار بازدید" },
   { href: "/adminPanel/orders", label: "سفارش ها" },
 ];
 

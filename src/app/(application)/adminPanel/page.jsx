@@ -1,6 +1,6 @@
 "use client";
 
-import { BarChart3, PackageCheck, ShoppingCart, User2Icon } from "lucide-react";
+import { BarChart3, PackageCheck, ShoppingCart, User2Icon, View } from "lucide-react";
 import Link from "next/link";
 
 export default function AdminPage() {
@@ -14,6 +14,11 @@ export default function AdminPage() {
       title: "مدیریت محصولات",
       icon: <PackageCheck className="w-10 h-10 text-yellow-400" />,
       href: "/adminPanel/products",
+    },
+    {
+      title: "آمار بازدید",
+      icon: <View className="w-10 h-10 text-yellow-400" />,
+      href: "/adminPanel/productViews",
     },
     {
       title: "داشبورد آماری",

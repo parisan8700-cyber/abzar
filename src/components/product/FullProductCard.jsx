@@ -16,6 +16,7 @@ import useAuthStore from "@/store/authStore";
 import Breadcrumb from "../ui/Breadcrumb";
 import Link from "next/link";
 import Loading from "../shared/loading/Loading";
+import { getVisitorId } from "@/utils/visitor";
 
 const MAX_CART_VALUE = 100000000;
 
@@ -34,10 +35,38 @@ export default function FullProduct() {
     const fetchProduct = async () => {
       try {
         const response = await Fetch.get(`/api/products/${slug}`);
+
         if (response.status === 200) {
-          setProduct(response.data);
+          const productData = response.data;
+
+          setProduct(productData);
+
+          // ثبت بازدید محصول
+          try {
+            const visitorId = getVisitorId();
+
+            if (visitorId && productData?._id) {
+              await Fetch.post(
+                `/api/products/${productData._id}/view`,
+                {
+                  visitorId,
+                }
+              );
+            }
+          } catch (viewError) {
+            // خطای ثبت بازدید نباید باعث خراب شدن صفحه محصول شود
+            console.error(
+              "خطا در ثبت بازدید محصول:",
+              viewError
+            );
+          }
         }
-      } catch (error) { }
+      } catch (error) {
+        console.error(
+          "خطا در دریافت محصول:",
+          error
+        );
+      }
     };
 
     fetchProduct();
