@@ -52,10 +52,20 @@ export default function AdminOrdersPage() {
 
             const phone = order.phone ?? "";
 
+            const searchText = search.trim().toLowerCase();
+
+            const matchProduct = order.items?.some((item) =>
+                item.productId?.name
+                    ?.toLowerCase()
+                    .includes(searchText)
+            );
+
             const matchSearch =
-                fullName.includes(search.toLowerCase()) ||
+                !searchText ||
+                fullName.includes(searchText) ||
                 phone.includes(search) ||
-                order._id.includes(search);
+                order._id.includes(search) ||
+                matchProduct;
 
             const matchStatus =
                 status === "all"
@@ -82,7 +92,11 @@ export default function AdminOrdersPage() {
                 }
             }
 
-            return matchSearch && matchStatus && matchPayment;
+            return (
+                matchSearch &&
+                matchStatus &&
+                matchPayment
+            );
         });
     }, [orders, search, status, paymentType, date]);
 
