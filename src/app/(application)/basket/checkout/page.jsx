@@ -173,7 +173,7 @@ export default function Checkout() {
       ...formData,
       items: cartItems,
       paymentType,
-      shippingMethod,
+      shippingMethod: "post",
       guestId,
     };
 
@@ -281,74 +281,14 @@ export default function Checkout() {
                     true
                   )}
 
-                  {/* روش ارسال */}
-                  <div className="sm:col-span-2 mt-2">
-                    <h3 className="font-bold text-lg mb-4 text-gray-800">
-                      🚚 روش ارسال
-                    </h3>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-                      {/* تحویل حضوری */}
-                      <div
-                        onClick={() => setShippingMethod("pickup")}
-                        className={`cursor-pointer border rounded-2xl p-4 flex justify-between items-center transition
-            ${shippingMethod === "pickup"
-                            ? "border-green-500 bg-green-50"
-                            : "hover:bg-gray-50"
-                          }`}
-                      >
-                        <div>
-                          <p className="font-semibold">
-                            🏪 تحویل حضوری
-                          </p>
-
-                          <p className="text-sm text-gray-500">
-                            دریافت از فروشگاه
-                          </p>
-                        </div>
-
-                        <div className="font-bold text-green-600">
-                          100,000 تومان به عنوان پیش پرداخت
-                        </div>
-                      </div>
-
-                      {/* تیپاکس */}
-                      <div
-                        onClick={() => setShippingMethod("post")}
-                        className={`cursor-pointer border rounded-2xl p-4 flex justify-between items-center transition
-            ${shippingMethod === "post"
-                            ? "border-blue-500 bg-blue-50"
-                            : "hover:bg-gray-50"
-                          }`}
-                      >
-                        <div>
-                          <p className="font-semibold">
-                            🚚 تیپاکس
-                          </p>
-
-                          <p className="text-sm text-gray-500">
-                            هزینه ارسال در مقصد دریافت می‌شود
-                          </p>
-
-                        </div>
-
-                        <div className="font-bold text-blue-600">
-                          100,000 تومان به عنوان پیش پرداخت
-                        </div>
-                      </div>
-
-                    </div>
-                  </div>
-
                 </div>
 
                 {/* SUMMARY */}
                 <div className="bg-white rounded-2xl p-5 border mt-6 space-y-3">
 
                   <div className="flex justify-between text-gray-600">
-                    <span>هزینه ارسال</span>
-                    <span>{shippingCost.toLocaleString()} تومان</span>
+                    <span>هزینه رزرو محصول</span>
+                    <span>100,000 تومان</span>
                   </div>
 
                   <div className="flex justify-between text-base font-bold text-gray-900 border-t pt-3">

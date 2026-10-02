@@ -40,6 +40,19 @@ export default function Sidebar() {
     getCategories();
   }, []);
 
+
+  useEffect(() => {
+    const openSidebar = () => {
+      setIsOpen(true);
+    };
+
+    window.addEventListener("open-sidebar", openSidebar);
+
+    return () => {
+      window.removeEventListener("open-sidebar", openSidebar);
+    };
+  }, []);
+
   return (
     <div className="min-[970px]:hidden">
       {/* دکمه باز کردن */}
